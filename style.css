@@ -45,7 +45,9 @@
   --safe-right: env(safe-area-inset-right, 0px);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -69,12 +71,17 @@ body {
   overflow-x: hidden;
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
 }
 
-button, a, input, select, textarea {
+button,
+a,
+input,
+select,
+textarea {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -397,8 +404,17 @@ button {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.35); opacity: 0.7; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: 0.7;
+  }
 }
 
 .hero-heading {
@@ -1136,6 +1152,187 @@ button {
   box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
+/* Password Input with Toggle Eye */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input-wrapper .form-input {
+  padding-right: 44px;
+}
+
+.btn-toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94A3B8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.btn-toggle-password:hover {
+  color: var(--primary);
+  background: rgba(0, 102, 255, 0.08);
+}
+
+.btn-toggle-password svg {
+  width: 19px;
+  height: 19px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Password Strength Meter & Checklist */
+.password-strength-container {
+  margin-top: 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.strength-meter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  margin-bottom: 6px;
+}
+
+.strength-label {
+  color: #64748B;
+  font-weight: 600;
+}
+
+.strength-text {
+  font-weight: 700;
+  font-size: 12px;
+  color: #94A3B8;
+  transition: color 0.3s ease;
+}
+
+.strength-meter-track {
+  width: 100%;
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.strength-meter-bar {
+  height: 100%;
+  width: 0%;
+  background: #94A3B8;
+  border-radius: var(--radius-full);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.35s ease;
+}
+
+.password-criteria-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.criteria-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748B;
+  transition: all 0.25s ease;
+}
+
+.criteria-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #E2E8F0;
+  color: #94A3B8;
+  font-size: 9px;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.criteria-icon::after {
+  content: '•';
+  font-size: 14px;
+  line-height: 1;
+}
+
+.criteria-item.valid {
+  color: #0F766E;
+  font-weight: 600;
+}
+
+.criteria-item.valid .criteria-icon {
+  background: #D1FAE5;
+  color: #059669;
+  transform: scale(1.05);
+}
+
+.criteria-item.valid .criteria-icon::after {
+  content: '✓';
+  font-size: 11px;
+}
+
+/* Shake animation khi lỗi */
+@keyframes shakeInput {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+.form-input.input-error {
+  border-color: #EF4444 !important;
+  animation: shakeInput 0.4s ease-in-out;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
+}
+
+
 .toast {
   position: fixed;
   bottom: 24px;
@@ -1342,7 +1539,9 @@ button {
     font-size: 21px;
   }
 
-  .feature-card, .value-card, .step-card {
+  .feature-card,
+  .value-card,
+  .step-card {
     padding: 16px 14px;
   }
 
@@ -1357,7 +1556,10 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
