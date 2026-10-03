@@ -422,8 +422,47 @@
 
                 <div class="form-group">
                     <label class="form-label" for="authPassword">Mật khẩu</label>
-                    <input type="password" class="form-input" id="authPassword" required placeholder="••••••••"
-                        value="MatKhauBaoMat123">
+                    <div class="password-input-wrapper">
+                        <input type="password" class="form-input" id="authPassword" required
+                            placeholder="Nhập mật khẩu an toàn..." autocomplete="new-password">
+                        <button type="button" class="btn-toggle-password" id="togglePasswordBtn"
+                            aria-label="Hiện/ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
+                            <svg id="eyeIcon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Password strength & checklist (chỉ hiện khi đăng ký) -->
+                    <div class="password-strength-container register-only" id="passwordStrengthBox">
+                        <div class="strength-meter-header">
+                            <span class="strength-label">Độ an toàn:</span>
+                            <span class="strength-text" id="strengthStatusText">Chưa nhập</span>
+                        </div>
+                        <div class="strength-meter-track">
+                            <div class="strength-meter-bar" id="strengthBar"></div>
+                        </div>
+
+                        <div class="password-criteria-list" id="passwordCriteria">
+                            <div class="criteria-item" id="critMinLength">
+                                <span class="criteria-icon"></span>
+                                <span class="criteria-text">Ít nhất 8 ký tự</span>
+                            </div>
+                            <div class="criteria-item" id="critUppercase">
+                                <span class="criteria-icon"></span>
+                                <span class="criteria-text">Ít nhất 1 ký tự viết hoa (A-Z)</span>
+                            </div>
+                            <div class="criteria-item" id="critLetterNumber">
+                                <span class="criteria-icon"></span>
+                                <span class="criteria-text">Đủ cả chữ cái và số</span>
+                            </div>
+                            <div class="criteria-item" id="critSpecialChar">
+                                <span class="criteria-icon"></span>
+                                <span class="criteria-text">Có ít nhất 1 ký tự đặc biệt (!@#$%...)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary" id="authSubmitBtn" style="width: 100%; margin-top: 10px;">
@@ -434,6 +473,7 @@
     </div>
 
     <script src="js/utils/toast.js"></script>
+    <script src="js/utils/helpers.js"></script>
     <script src="js/modules/navbar.js"></script>
     <script src="js/modules/heroMockup.js"></script>
     <script src="js/modules/authModal.js"></script>
