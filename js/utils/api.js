@@ -29,7 +29,7 @@
   function getAxiosClient() {
     if (!axiosInstance && typeof axios !== 'undefined') {
       axiosInstance = axios.create({
-        timeout: 30000, // Timeout 30000ms theo yêu cầu
+        timeout: (window.APP_CONFIG && window.APP_CONFIG.TIMEOUT_MS) || 90000,
         headers: {
           'Accept': 'application/json, text/plain, */*',
         },
@@ -63,7 +63,7 @@
   }
 
   /**
-   * Core request wrapper sử dụng Axios với timeout 30000ms
+   * Core request wrapper sử dụng Axios hoặc Fetch native với timeout 90000ms
    */
   async function request(endpoint, options = {}) {
     const baseURL = API_CONFIG.BASE_URL;
@@ -82,14 +82,21 @@
     let requestData = options.data !== undefined ? options.data : options.body;
 
     if (requestData instanceof FormData) {
-      // Để trình duyệt và Axios tự động xử lý boundary
       delete headers['Content-Type'];
     } else if (requestData !== undefined && !headers['Content-Type']) {
       headers['Content-Type'] = 'application/json';
     }
 
-    const timeout = options.timeout || API_CONFIG.TIMEOUT_MS || 30000;
+    const timeout = options.timeout || API_CONFIG.TIMEOUT_MS || 90000;
     const method = (options.method || 'GET').toUpperCase();
+
+    // Thông báo cho người dùng nếu server Render đang ngủ và cần thời gian khởi động
+    let coldStartTimer = null;
+    if (window.showToast) {
+      coldStartTimer = setTimeout(() => {
+        window.showToast('Máy chủ Render đang thức dậy từ chế độ ngủ miễn phí (Cold Start ~50s), vui lòng đợi trong giây lát...', 'info');
+      }, 5000);
+    }
 
     const client = getAxiosClient();
 
@@ -106,11 +113,14 @@
           skipAuthHandling: options.skipAuthHandling,
         });
 
+        if (coldStartTimer) clearTimeout(coldStartTimer);
         return response.data;
       } catch (err) {
-        // 1. Xử lý timeout của Axios (vượt quá 30000ms)
+        if (coldStartTimer) clearTimeout(coldStartTimer);
+
+        // 1. Xử lý timeout của Axios (vượt quá 90000ms)
         if (err.code === 'ECONNABORTED' || (err.message && err.message.toLowerCase().includes('timeout'))) {
-          const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout 30s). Máy chủ Render đang khởi động lại (Cold Start), vui lòng thử lại sau giây lát!');
+          const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout). Máy chủ Render đang khởi động lại (Cold Start), vui lòng thử bấm lại!');
           timeoutErr.status = 408;
           timeoutErr.code = 'ECONNABORTED';
           throw timeoutErr;
@@ -151,6 +161,7 @@
           signal: controller.signal,
         });
 
+        if (coldStartTimer) clearTimeout(coldStartTimer);
         clearTimeout(timeoutId);
 
         if (response.status === 401 && !options.skipAuthHandling) {
@@ -174,9 +185,10 @@
 
         return data;
       } catch (err) {
+        if (coldStartTimer) clearTimeout(coldStartTimer);
         clearTimeout(timeoutId);
         if (err.name === 'AbortError') {
-          const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout 30s). Máy chủ Render đang khởi động lại (Cold Start), vui lòng thử lại sau giây lát!');
+          const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout). Máy chủ Render đang khởi động lại (Cold Start), vui lòng thử bấm lại!');
           timeoutErr.status = 408;
           throw timeoutErr;
         }

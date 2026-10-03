@@ -347,7 +347,11 @@
       const token = window.getAuthToken ? window.getAuthToken() : '';
       if (!window.EventSource) return;
 
-      const url = token ? `/api/notifications/stream?token=${encodeURIComponent(token)}` : '/api/notifications/stream';
+      const backendUrl = (window.APP_CONFIG && window.APP_CONFIG.BACKEND_URL)
+        ? window.APP_CONFIG.BACKEND_URL.replace(/\/+$/, '')
+        : '';
+      const endpoint = token ? `/api/notifications/stream?token=${encodeURIComponent(token)}` : '/api/notifications/stream';
+      const url = `${backendUrl}${endpoint}`;
 
       try {
         if (eventSource) eventSource.close();
