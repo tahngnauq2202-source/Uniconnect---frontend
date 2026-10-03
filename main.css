@@ -1,7 +1,42 @@
-﻿/* main.css */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
+:root {
+    --primary: #0066FF;
+    --primary-hover: #0052D4;
+    --primary-light: #EBF3FF;
+    --primary-glow: rgba(0, 102, 255, 0.25);
+
+    --navy: #001E2B;
+    --navy-light: #0d2e3d;
+
+    --bg-app: #F7F9FC;
+    --surface: #FFFFFF;
+    --border-color: #E6ECF2;
+    --border-hover: #CBD5E1;
+
+    --text-main: #0F172A;
+    --text-body: #334155;
+    --text-muted: #64748B;
+    --text-light: #94A3B8;
+
+    --sidebar-w-collapsed: 76px;
+    --sidebar-w-expanded: 256px;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 12px 28px -6px rgba(15, 23, 42, 0.12);
+    --shadow-sidebar: 6px 0 24px rgba(15, 23, 42, 0.08);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+}
