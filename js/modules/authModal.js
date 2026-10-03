@@ -7,9 +7,13 @@
 (function () {
   'use strict';
 
+  let isAuthModalInitialized = false;
+
   function initAuthModal() {
+    if (isAuthModalInitialized) return;
     const authModal = document.getElementById('authModal');
     if (!authModal) return;
+    isAuthModalInitialized = true;
 
     // DOM Elements - Navigation & Views
     const modalCloseBtn = document.getElementById('modalCloseBtn');
@@ -144,6 +148,27 @@
       clearAuthError();
       authModal.classList.add('active');
       document.body.style.overflow = 'hidden';
+
+      // Xóa sạch toàn bộ thông tin đã nhập trước đó
+      if (authFullName) authFullName.value = '';
+      if (authEmail) authEmail.value = '';
+      if (authPassword) {
+        authPassword.value = '';
+        authPassword.type = 'password';
+      }
+      if (togglePasswordBtn) {
+        togglePasswordBtn.classList.remove('is-active');
+        togglePasswordBtn.setAttribute('title', 'Hiện mật khẩu');
+        togglePasswordBtn.setAttribute('aria-label', 'Hiện mật khẩu');
+      }
+      if (eyeIcon) {
+        eyeIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      }
+      updatePasswordStrengthUI('');
+
       showAuthFormView();
       switchAuthMode(mode);
     }
@@ -159,6 +184,22 @@
     function switchAuthMode(mode) {
       clearAuthError();
       showAuthFormView();
+
+      // Đặt lại password về ẩn khi đổi tab
+      if (authPassword) {
+        authPassword.type = 'password';
+      }
+      if (togglePasswordBtn) {
+        togglePasswordBtn.classList.remove('is-active');
+        togglePasswordBtn.setAttribute('title', 'Hiện mật khẩu');
+      }
+      if (eyeIcon) {
+        eyeIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      }
+
       if (mode === 'login') {
         if (modalTabLogin) modalTabLogin.classList.add('active');
         if (modalTabRegister) modalTabRegister.classList.remove('active');
@@ -255,22 +296,36 @@
     }
 
     if (togglePasswordBtn && authPassword) {
-      togglePasswordBtn.addEventListener('click', () => {
-        const isPassword = authPassword.type === 'password';
-        authPassword.type = isPassword ? 'text' : 'password';
+      togglePasswordBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const isCurrentlyPassword = authPassword.type === 'password';
+        authPassword.type = isCurrentlyPassword ? 'text' : 'password';
+
         if (eyeIcon) {
-          if (isPassword) {
+          if (isCurrentlyPassword) {
+            // Mật khẩu đang HIỆN -> Hiển thị icon mắt gạch chéo để bấm ẩn đi
             eyeIcon.innerHTML = `
               <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
               <line x1="1" y1="1" x2="23" y2="23"></line>
             `;
+            togglePasswordBtn.classList.add('is-active');
+            togglePasswordBtn.setAttribute('title', 'Ẩn mật khẩu');
+            togglePasswordBtn.setAttribute('aria-label', 'Ẩn mật khẩu');
           } else {
+            // Mật khẩu đang ẨN -> Hiển thị icon mắt thường để bấm hiện lên
             eyeIcon.innerHTML = `
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
               <circle cx="12" cy="12" r="3"></circle>
             `;
+            togglePasswordBtn.classList.remove('is-active');
+            togglePasswordBtn.setAttribute('title', 'Hiện mật khẩu');
+            togglePasswordBtn.setAttribute('aria-label', 'Hiện mật khẩu');
           }
         }
+
+        authPassword.focus();
       });
     }
 

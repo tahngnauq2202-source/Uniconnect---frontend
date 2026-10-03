@@ -1150,7 +1150,7 @@ button {
 
 .btn-toggle-password {
   position: absolute;
-  right: 10px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
@@ -1160,11 +1160,14 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 6px;
-  transition: var(--transition);
+  transition: all 0.2s ease;
   padding: 0;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .btn-toggle-password:hover {
@@ -1172,12 +1175,23 @@ button {
   background: rgba(0, 102, 255, 0.08);
 }
 
+.btn-toggle-password.is-active {
+  color: var(--primary);
+  background: rgba(0, 102, 255, 0.12);
+}
+
+.btn-toggle-password:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
 .btn-toggle-password svg {
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
   stroke: currentColor;
   stroke-width: 2;
   fill: none;
+  pointer-events: none;
+  transition: transform 0.2s ease;
 }
 
 /* Password Strength Meter & Checklist */

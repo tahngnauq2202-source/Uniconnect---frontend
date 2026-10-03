@@ -405,8 +405,8 @@
                 <form id="authForm">
                     <div class="form-group register-only">
                         <label class="form-label" for="authFullName">Họ và tên</label>
-                        <input type="text" class="form-input" id="authFullName" placeholder="Nguyễn Văn A"
-                            value="Nguyễn Quốc Tuấn">
+                        <input type="text" class="form-input" id="authFullName" placeholder="Nhập họ và tên..."
+                            autocomplete="name">
                     </div>
 
                     <div class="form-group register-only">
@@ -420,17 +420,17 @@
                     <div class="form-group">
                         <label class="form-label" for="authEmail">Email sinh viên HUCE (*@st.huce.edu.vn)</label>
                         <input type="email" class="form-input" id="authEmail" required
-                            placeholder="tuan.nq@st.huce.edu.vn" value="tuan.nq@st.huce.edu.vn">
+                            placeholder="Nhập email trường (@st.huce.edu.vn)..." autocomplete="username">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="authPassword">Mật khẩu</label>
                         <div class="password-input-wrapper">
                             <input type="password" class="form-input" id="authPassword" required
-                                placeholder="Nhập mật khẩu an toàn..." autocomplete="new-password">
+                                placeholder="Nhập mật khẩu..." autocomplete="current-password">
                             <button type="button" class="btn-toggle-password" id="togglePasswordBtn"
-                                aria-label="Hiện/ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
-                                <svg id="eyeIcon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                aria-label="Hiện mật khẩu" title="Hiện mật khẩu">
+                                <svg id="eyeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
@@ -512,7 +512,7 @@
                         Mã xác thực <strong>6 chữ số</strong> đã được gửi tới email trường:
                     </p>
                     <div class="otp-email-chip" id="otpDisplayEmail">
-                        <span>tuan.nq@st.huce.edu.vn</span>
+                        <span>---</span>
                     </div>
                 </div>
 
@@ -590,7 +590,7 @@
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span id="huceMailTargetEmail">tuan.nq@st.huce.edu.vn</span>
+                <span id="huceMailTargetEmail">---</span>
             </div>
             <div class="huce-mail-instruction">Vui lòng kiểm tra hộp thư đến (Inbox) hoặc thư rác (Spam) của email sinh
                 viên để lấy mã xác thực và hoàn tất đăng ký.</div>
