@@ -16,71 +16,172 @@
       return '';
     },
     get TIMEOUT_MS() {
-      return (window.APP_CONFIG && window.APP_CONFIG.TIMEOUT_MS) || 20000;
+      return (window.APP_CONFIG && window.APP_CONFIG.TIMEOUT_MS) || 30000;
     },
   };
 
   /**
-   * Core request wrapper
+   * Cấu hình Axios Client với timeout 30000ms (30 giây)
+   * Giúp xử lý hiện tượng Render Cold Start khi máy chủ ngủ đông
+   */
+  let axiosInstance = null;
+
+  function getAxiosClient() {
+    if (!axiosInstance && typeof axios !== 'undefined') {
+      axiosInstance = axios.create({
+        timeout: 30000, // Timeout 30000ms theo yêu cầu
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+        },
+      });
+
+      // Request Interceptor: Đính kèm Bearer Token & Base URL
+      axiosInstance.interceptors.request.use((config) => {
+        if (!config.baseURL && API_CONFIG.BASE_URL) {
+          config.baseURL = API_CONFIG.BASE_URL;
+        }
+        const token = window.getAuthToken ? window.getAuthToken() : localStorage.getItem('uniconnect_token');
+        if (token && !config.skipAuth) {
+          config.headers = config.headers || {};
+          config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+      }, (error) => Promise.reject(error));
+
+      // Response Interceptor: Cảnh báo phiên 401
+      axiosInstance.interceptors.response.use(
+        (response) => response,
+        (error) => {
+          if (error.response && error.response.status === 401 && !error.config?.skipAuthHandling) {
+            console.warn('[UniConnect API] ⚠️ Phiên đăng nhập hết hạn hoặc không hợp lệ.');
+          }
+          return Promise.reject(error);
+        }
+      );
+    }
+    return axiosInstance;
+  }
+
+  /**
+   * Core request wrapper sử dụng Axios với timeout 30000ms
    */
   async function request(endpoint, options = {}) {
-    const url = `${API_CONFIG.BASE_URL}${endpoint}`;
+    const baseURL = API_CONFIG.BASE_URL;
+    const url = endpoint.startsWith('http://') || endpoint.startsWith('https://')
+      ? endpoint
+      : `${baseURL}${endpoint}`;
+
     const token = window.getAuthToken ? window.getAuthToken() : localStorage.getItem('uniconnect_token');
+    const headers = { ...(options.headers || {}) };
 
-    const headers = { ...options.headers };
-
-    // Attach JWT Bearer token if available and not explicitly skipped
     if (token && !options.skipAuth) {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    // Unless sending FormData, default to application/json
-    if (!(options.body instanceof FormData) && !headers['Content-Type']) {
+    // Dữ liệu payload (hỗ trợ cả options.data và options.body)
+    let requestData = options.data !== undefined ? options.data : options.body;
+
+    if (requestData instanceof FormData) {
+      // Để trình duyệt và Axios tự động xử lý boundary
+      delete headers['Content-Type'];
+    } else if (requestData !== undefined && !headers['Content-Type']) {
       headers['Content-Type'] = 'application/json';
     }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), options.timeout || API_CONFIG.TIMEOUT_MS);
+    const timeout = options.timeout || API_CONFIG.TIMEOUT_MS || 30000;
+    const method = (options.method || 'GET').toUpperCase();
 
-    try {
-      const response = await fetch(url, {
-        ...options,
-        headers,
-        signal: controller.signal,
-      });
+    const client = getAxiosClient();
 
-      clearTimeout(timeoutId);
+    if (client) {
+      try {
+        const response = await client({
+          url,
+          method,
+          headers,
+          data: requestData,
+          params: options.params,
+          timeout,
+          skipAuth: options.skipAuth,
+          skipAuthHandling: options.skipAuthHandling,
+        });
 
-      // Handle 401 Unauthorized (token expired or invalid)
-      if (response.status === 401 && !options.skipAuthHandling) {
-        console.warn('[UniConnect API] ⚠️ Phiên đăng nhập hết hạn hoặc không hợp lệ.');
-        // Do not force logout if simply checking anonymous access
+        return response.data;
+      } catch (err) {
+        // 1. Xử lý timeout của Axios (vượt quá 30000ms)
+        if (err.code === 'ECONNABORTED' || (err.message && err.message.toLowerCase().includes('timeout'))) {
+          const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout 30s). Máy chủ Render đang khởi động lại (Cold Start), vui lòng thử lại sau giây lát!');
+          timeoutErr.status = 408;
+          timeoutErr.code = 'ECONNABORTED';
+          throw timeoutErr;
+        }
+
+        // 2. Xử lý phản hồi lỗi từ backend (4xx, 5xx)
+        if (err.response) {
+          const resStatus = err.response.status;
+          const resData = err.response.data;
+          const message = (resData && (resData.message || resData.error)) || `Lỗi máy chủ (${resStatus})`;
+          const customErr = new Error(message);
+          customErr.status = resStatus;
+          customErr.data = resData;
+          customErr.response = err.response;
+          throw customErr;
+        }
+
+        // 3. Xử lý lỗi mạng không nhận được phản hồi
+        if (err.request) {
+          const netErr = new Error('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối mạng hoặc thử lại sau!');
+          netErr.status = 0;
+          throw netErr;
+        }
+
+        throw err;
       }
+    } else {
+      // Fallback Fetch native nếu thư viện Axios chưa tải kịp
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-      let data;
-      const contentType = response.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        data = await response.json();
-      } else {
-        data = await response.text();
-      }
+      try {
+        const response = await fetch(url, {
+          ...options,
+          method,
+          headers,
+          body: requestData,
+          signal: controller.signal,
+        });
 
-      if (!response.ok) {
-        const error = new Error((data && data.message) || `HTTP error ${response.status}`);
-        error.status = response.status;
-        error.data = data;
-        throw error;
-      }
+        clearTimeout(timeoutId);
 
-      return data;
-    } catch (err) {
-      clearTimeout(timeoutId);
-      if (err.name === 'AbortError') {
-        const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout). Vui lòng thử lại.');
-        timeoutErr.status = 408;
-        throw timeoutErr;
+        if (response.status === 401 && !options.skipAuthHandling) {
+          console.warn('[UniConnect API] ⚠️ Phiên đăng nhập hết hạn hoặc không hợp lệ.');
+        }
+
+        let data;
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          data = await response.text();
+        }
+
+        if (!response.ok) {
+          const error = new Error((data && (data.message || data.error)) || `HTTP error ${response.status}`);
+          error.status = response.status;
+          error.data = data;
+          throw error;
+        }
+
+        return data;
+      } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.name === 'AbortError') {
+          const timeoutErr = new Error('Yêu cầu hết thời gian chờ (Timeout 30s). Máy chủ Render đang khởi động lại (Cold Start), vui lòng thử lại sau giây lát!');
+          timeoutErr.status = 408;
+          throw timeoutErr;
+        }
+        throw err;
       }
-      throw err;
     }
   }
 
@@ -91,10 +192,10 @@
     /**
      * Đăng ký tài khoản sinh viên / giảng viên HUCE
      */
-    async register({ username, email, password, fullName }) {
+    async register({ username, email, password, fullName, role = 'STUDENT' }) {
       return request('/api/auth/register', {
         method: 'POST',
-        body: JSON.stringify({ username, email, password, fullName }),
+        body: JSON.stringify({ username, email, password, fullName, role }),
       });
     },
 
@@ -422,5 +523,6 @@
     categories,
     request,
     getMediaUrl,
+    getAxiosClient,
   };
 })();
