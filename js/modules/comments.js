@@ -8,12 +8,20 @@ function bindCommentControls(rootContainer) {
     const commentButtons = rootContainer.querySelectorAll('.btn-comment-post');
     commentButtons.forEach(btn => {
         if (btn.dataset.commentBound) return;
+<<<<<<< HEAD
         btn.dataset.commentBound = "true";
+=======
+        btn.dataset.commentBound = 'true';
+>>>>>>> abd51b85ec9c712536f599d0b46ee4927fb3a3a2
 
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
 
+<<<<<<< HEAD
             const postCard = btn.closest('.post-card');
+=======
+            const postCard = btn.closet('.post-card')
+>>>>>>> abd51b85ec9c712536f599d0b46ee4927fb3a3a2
             if (!postCard) return;
 
             const commentsContainer = postCard.querySelector('.post-comments-container');
@@ -30,6 +38,10 @@ function bindCommentControls(rootContainer) {
                     setTimeout(() => textarea.focus(), 150);
                 }
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> abd51b85ec9c712536f599d0b46ee4927fb3a3a2
             else {
                 commentsContainer.style.display = 'none';
                 btn.classList.remove('active');
@@ -50,13 +62,18 @@ function bindCommentControls(rootContainer) {
 
             if (!text) return;
 
+<<<<<<< HEAD
             const postCard = form.closest('.post-card');
+=======
+            const postCard = form.closet('.post-card');
+>>>>>>> abd51b85ec9c712536f599d0b46ee4927fb3a3a2
             const commentsList = postCard?.querySelector('.comments-list');
             if (!commentsList) return;
 
             const safeText = typeof escapeHtml === 'function' ? escapeHtml(text) : text;
 
             const newCommentEl = document.createElement('div');
+<<<<<<< HEAD
             newCommentEl.className = 'comment-item new-comment-highlight';
 
             let authorName = 'Linh Nguyễn';
@@ -236,3 +253,15 @@ function incrementPostCommentCount(postCard) {
 window.initComments = initComments;
 window.bindCommentControls = bindCommentControls;
 window.incrementPostCommentCount = incrementPostCommentCount;
+=======
+            newCommentEl.classmate = 'comment-item new-comment-highlight';
+
+            newCommentEl.innerHTML = `
+                <div class="comment-avatar  avatar-student">LN</div>
+                <div class="comment-body-wrap">
+
+                `
+        }
+    }
+}
+>>>>>>> abd51b85ec9c712536f599d0b46ee4927fb3a3a2
