@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
   --primary: #0066FF;
@@ -45,9 +45,7 @@
   --safe-right: env(safe-area-inset-right, 0px);
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -71,17 +69,12 @@ body {
   overflow-x: hidden;
 }
 
-img,
-svg {
+img, svg {
   display: block;
   max-width: 100%;
 }
 
-button,
-a,
-input,
-select,
-textarea {
+button, a, input, select, textarea {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -404,17 +397,8 @@ button {
 }
 
 @keyframes pulse-dot {
-
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.35);
-    opacity: 0.7;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.7; }
 }
 
 .hero-heading {
@@ -1211,7 +1195,6 @@ button {
     opacity: 0;
     transform: translateY(-5px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1309,21 +1292,9 @@ button {
 
 /* Shake animation khi lỗi */
 @keyframes shakeInput {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  20%,
-  60% {
-    transform: translateX(-6px);
-  }
-
-  40%,
-  80% {
-    transform: translateX(6px);
-  }
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
 }
 
 .form-input.input-error {
@@ -1449,11 +1420,71 @@ button {
 
 .otp-error-hint {
   min-height: 18px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   color: #EF4444;
   text-align: center;
-  margin-top: 4px;
+  margin-top: 6px;
+  transition: all 0.2s ease;
+}
+
+/* In-form Auth Error Alert Banner */
+.auth-error-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  padding: 10px 14px;
+  border-radius: var(--radius-md, 8px);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 10px 0 14px;
+  animation: shakeInput 0.35s ease-in-out;
+  box-sizing: border-box;
+}
+
+.auth-error-alert .auth-error-icon {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  color: #EF4444;
+  margin-top: 1px;
+}
+
+.auth-error-alert .auth-error-text {
+  flex: 1;
+}
+
+/* Button Loading State & Spinner */
+.btn.is-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.btn.is-loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 2.5px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: btnSpin 0.7s linear infinite;
+}
+
+@keyframes btnSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Đếm ngược và Gửi lại mã */
@@ -1649,13 +1680,11 @@ button {
   .otp-inputs-wrapper {
     gap: 6px;
   }
-
   .otp-box {
     width: 40px;
     height: 50px;
     font-size: 20px;
   }
-
   .huce-mail-notification {
     top: 12px;
     right: 12px;
@@ -1871,9 +1900,7 @@ button {
     font-size: 21px;
   }
 
-  .feature-card,
-  .value-card,
-  .step-card {
+  .feature-card, .value-card, .step-card {
     padding: 16px 14px;
   }
 
@@ -1888,10 +1915,7 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

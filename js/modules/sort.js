@@ -1,53 +1,80 @@
-﻿function initSort() {
-  const sortBtns = document.querySelectorAll('.sort-btn');
-  const feedList = document.getElementById('feedList');
+/**
+ * UniConnect HUCE - Feed Sorting & Category Filter Module
+ */
 
-  if (!feedList) return;
+(function () {
+  'use strict';
 
-  sortBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+  function initSortModule() {
+    const sortBtns = document.querySelectorAll('.sort-btn');
+    const feedList = document.getElementById('feedList');
+    if (!feedList) return;
 
-      sortBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    sortBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sortBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-      const sortType = btn.getAttribute('data-sort');
+        const sortType = btn.getAttribute('data-sort');
+        const posts = Array.from(feedList.querySelectorAll('.post-card'));
 
-      const posts = Array.from(feedList.querySelectorAll('.post-card'));
-
-      if (sortType === 'newest') {
-        posts.sort((a, b) => {
-          const timeA = parseInt(a.dataset.timestamp || 0, 10);
-          const timeB = parseInt(b.dataset.timestamp || 0, 10);
-          return timeB - timeA;
-        });
-        if (typeof showToast === 'function') {
-          showToast('Đang hiển thị bài viết mới nhất', 'feedToast');
+        if (sortType === 'newest') {
+          posts.sort((a, b) => {
+            const timeA = parseInt(a.getAttribute('data-timestamp') || '0', 10);
+            const timeB = parseInt(b.getAttribute('data-timestamp') || '0', 10);
+            return timeB - timeA;
+          });
+          if (window.showToast) window.showToast('Đang hiển thị bài viết mới nhất', 'info');
+        } else if (sortType === 'rising') {
+          posts.sort((a, b) => {
+            const commentsA = parseInt(a.getAttribute('data-comments') || '0', 10);
+            const commentsB = parseInt(b.getAttribute('data-comments') || '0', 10);
+            return commentsB - commentsA;
+          });
+          if (window.showToast) window.showToast('Đang hiển thị bài viết đang sôi nổi thảo luận', 'info');
+        } else {
+          posts.sort((a, b) => {
+            const scoreA = parseInt(a.getAttribute('data-score') || '0', 10);
+            const scoreB = parseInt(b.getAttribute('data-score') || '0', 10);
+            return scoreB - scoreA;
+          });
+          if (window.showToast) window.showToast('Đang hiển thị bài viết nổi bật nhiều upvote', 'info');
         }
-      }
-      else if (sortType === 'rising') {
-        posts.sort((a, b) => {
-          const commentsA = parseInt(a.dataset.comments || 0, 10);
-          const commentsB = parseInt(b.dataset.comments || 0, 10);
-          return commentsB - commentsA;
-        });
-        if (typeof showToast === 'function') {
-          showToast('Đang hiển thị bài viết đang lên (nhiều thảo luận)', 'feedToast');
-        }
-      }
-      else {
-        posts.sort((a, b) => {
-          const scoreA = parseInt(a.dataset.score || 0, 10);
-          const scoreB = parseInt(b.dataset.score || 0, 10);
-          return scoreB - scoreA;
-        });
-        if (typeof showToast === 'function') {
-          showToast('Đang hiển thị bài viết nổi bật (điểm vote cao)', 'feedToast');
-        }
-      }
 
-      posts.forEach(post => feedList.appendChild(post));
+        posts.forEach(post => feedList.appendChild(post));
+      });
     });
-  });
-}
 
-window.initSort = initSort;
+    // Subject/tag filtering
+    document.querySelectorAll('[data-subject-filter]').forEach(tagBtn => {
+      tagBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetTag = tagBtn.getAttribute('data-subject-filter').toLowerCase().replace('#', '');
+        const posts = feedList.querySelectorAll('.post-card');
+        let matched = 0;
+
+        posts.forEach(post => {
+          const postTag = (post.querySelector('.post-tag')?.textContent || '').toLowerCase().replace('#', '');
+          if (postTag.includes(targetTag) || targetTag === 'all') {
+            post.style.display = 'flex';
+            matched++;
+          } else {
+            post.style.display = 'none';
+          }
+        });
+
+        if (window.showToast) {
+          window.showToast(`Đã lọc theo chủ đề #${targetTag} (${matched} bài viết)`, 'info');
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSortModule);
+  } else {
+    initSortModule();
+  }
+
+  window.initSortModule = initSortModule;
+})();

@@ -1,33 +1,53 @@
-﻿function initSearch() {
-  const searchInput = document.getElementById('feedSearchInput');
-  if (!searchInput) return;
+/**
+ * UniConnect HUCE - Search Module
+ * Instant feed search & keyboard shortcuts (Ctrl+K)
+ */
 
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
+(function () {
+  'use strict';
 
-    const posts = document.querySelectorAll('.post-card');
+  function initSearchModule() {
+    const searchInput = document.getElementById('feedSearchInput');
+    const feedList = document.getElementById('feedList');
+    if (!searchInput || !feedList) return;
 
-    posts.forEach(post => {
-      const title = (post.querySelector('.post-heading-title')?.textContent || '').toLowerCase();
-      const content = (post.querySelector('.post-content-body')?.textContent || '').toLowerCase();
-      const tags = Array.from(post.querySelectorAll('.post-tag')).map(t => t.textContent).join(' ').toLowerCase();
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const posts = feedList.querySelectorAll('.post-card');
 
-      if (title.includes(query) || content.includes(query) || tags.includes(query)) {
-        post.style.display = 'flex';
-      } else {
-        post.style.display = 'none';
+      posts.forEach(post => {
+        const title = (post.querySelector('.post-heading-title')?.textContent || '').toLowerCase();
+        const content = (post.querySelector('.post-content-body')?.textContent || '').toLowerCase();
+        const tag = (post.querySelector('.post-tag')?.textContent || '').toLowerCase();
+        const author = (post.querySelector('.author-heading')?.textContent || '').toLowerCase();
+
+        if (!query || title.includes(query) || content.includes(query) || tag.includes(query) || author.includes(query)) {
+          post.style.display = 'flex';
+        } else {
+          post.style.display = 'none';
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.blur();
       }
     });
-  });
+  }
 
-  document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSearchModule);
+  } else {
+    initSearchModule();
+  }
 
-      searchInput.focus();
-      searchInput.select();
-    }
-  });
-}
-
-window.initSearch = initSearch;
+  window.initSearchModule = initSearchModule;
+})();
