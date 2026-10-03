@@ -27,3 +27,4 @@
   }, duration);
 }
 
+window.showToast = showToast;
