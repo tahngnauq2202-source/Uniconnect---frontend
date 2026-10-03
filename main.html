@@ -1,0 +1,1519 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Bảng tin | UniConnect HUCE</title>
+  <meta name="theme-color" content="#0066FF">
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%230066FF'/><text x='50%' y='58%' font-size='52' font-weight='900' fill='%23FFFFFF' text-anchor='middle' dominant-baseline='middle' font-family='sans-serif'>U</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <div class="sidebar-spacer"></div>
+
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="main.html" class="sidebar-logo" title="UniConnect HUCE">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+        </a>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-item">
+          <a href="main.html" class="nav-btn active">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <span class="nav-text">Bảng tin</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+              </svg>
+            </div>
+            <span class="nav-text">Khám phá</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
+              </svg>
+            </div>
+            <span class="nav-text">Tin nhắn</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-btn" id="sidebarNotificationBtn" title="Xem thông báo thời gian thực">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="badge-count" id="notificationBadge" data-notif-badge>3</span>
+            </div>
+            <span class="nav-text">Thông báo</span>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <span class="nav-text">Đã lưu</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+
+        <div class="nav-section-divider"></div>
+        <div class="nav-section-title">Chủ đề của bạn</div>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
+            </div>
+            <span class="nav-text">Học tập</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <span class="nav-text">Việc làm</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <span class="nav-text">Đồ thất lạc</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-btn">
+            <div class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <span class="nav-text">CLB & Sự kiện</span>
+            <span class="lock-icon">🔒</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-bottom-card">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
+          </svg>
+          Cộng đồng tích cực
+        </h4>
+        <p>Tôn trọng và giúp đỡ nhau trong mọi cuộc thảo luận học thuật HUCE.</p>
+      </div>
+
+      <a href="index.html" class="logout-btn" title="Đăng xuất về trang chủ">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </div>
+        <span class="nav-text">Đăng xuất</span>
+      </a>
+    </aside>
+
+    <div class="main-wrapper">
+
+      <header class="top-header" id="appTopHeader">
+        <a href="main.html" class="mobile-top-brand" id="mobileBrandLink" title="UniConnect HUCE - Bảng tin">
+          <div class="mobile-brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <div class="mobile-brand-title">UniConnect <span class="huce-tag">HUCE</span></div>
+        </a>
+
+        <div class="header-search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="header-search-input" id="feedSearchInput"
+            placeholder="Tìm bài viết, tài liệu, chủ đề học thuật...">
+          <span class="shortcut-badge">⌘ K</span>
+        </div>
+
+        <div class="mobile-header-actions">
+          <button type="button" class="mobile-header-btn" id="mobileHeaderNotifBtn" data-open-notifications title="Xem thông báo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="badge-count" data-notif-badge id="mobileNotifBadge">3</span>
+          </button>
+
+          <button type="button" class="mobile-avatar-btn" id="mobileHeaderMenuBtn" title="Menu chuyên mục & tài khoản">
+            <div class="user-avatar-sm">LN</div>
+            <span class="mobile-online-dot"></span>
+          </button>
+        </div>
+
+        <div class="user-profile-btn" id="desktopUserProfileBtn">
+          <div class="user-avatar">LN</div>
+          <div class="user-meta">
+            <span class="user-name">Linh Nguyễn</span>
+            <span class="user-role">Sinh viên K21 • HUCE</span>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </header>
+
+      <main class="content-layout">
+
+        <section class="feed-column">
+
+          <div class="post-create-box" id="postCreateBox">
+            <div class="create-box-collapsed" id="createBoxCollapsed">
+              <div class="user-avatar-sm">LN</div>
+              <div class="create-prompt-input" id="openComposerBtn">
+                <span>Đặt câu hỏi học thuật hoặc chia sẻ tài liệu HUCE mới...</span>
+              </div>
+              <button type="button" class="btn-quick-post" id="quickPostTriggerBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Đăng bài</span>
+              </button>
+            </div>
+
+            <form class="create-box-expanded" id="postCreateForm" style="display: none;">
+              <div class="composer-header">
+                <div class="composer-user-meta">
+                  <div class="user-avatar-sm">LN</div>
+                  <div>
+                    <span class="composer-author-name">Linh Nguyễn</span>
+                    <span class="composer-author-sub">Sinh viên K21 • Khoa Xây dựng HUCE</span>
+                  </div>
+                </div>
+                <button type="button" class="composer-close-btn" id="closeComposerBtn" title="Đóng">&times;</button>
+              </div>
+
+              <div class="composer-field">
+                <input type="text" class="composer-title-input" id="postTitleInput"
+                  placeholder="Tiêu đề câu hỏi / chia sẻ học thuật (ví dụ: Cách tính độ võng dầm liên tục...)" required>
+              </div>
+
+              <div class="composer-tags-group">
+                <span class="tags-group-label">Chọn môn học / chuyên ngành:</span>
+                <div class="composer-tag-pills" id="composerTagPills">
+                  <button type="button" class="tag-select-btn active"
+                    data-tag="#Bê_tông_cốt_thép">#Bê_tông_cốt_thép</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Sức_bền_vật_liệu">#Sức_bền_vật_liệu</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Cơ_học_kết_cấu">#Cơ_học_kết_cấu</button>
+                  <button type="button" class="tag-select-btn" data-tag="#CNTT_HUCE">#CNTT_HUCE</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Kinh_tế_xây_dựng">#Kinh_tế_xây_dựng</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Kiến_trúc_HUCE">#Kiến_trúc_HUCE</button>
+                </div>
+              </div>
+
+              <div class="composer-field">
+                <textarea class="composer-content-textarea" id="postContentInput" rows="3"
+                  placeholder="Nhập chi tiết câu hỏi, đính kèm thông số bài toán để giảng viên và cộng đồng HUCE hỗ trợ giải đáp..."
+                  required></textarea>
+              </div>
+
+              <div class="composer-footer">
+                <div class="composer-media-actions">
+                  <button type="button" class="media-btn" id="btnAttachPhoto">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>Ảnh bài tập</span>
+                  </button>
+                  <button type="button" class="media-btn" id="btnAttachDoc">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                    <span>Tài liệu PDF</span>
+                  </button>
+                  <span class="composer-hint-badge">💡 Giảng viên sẽ trả lời & xác nhận</span>
+                </div>
+
+                <div class="composer-submit-group">
+                  <button type="button" class="btn btn-cancel-post" id="cancelPostBtn">Hủy</button>
+                  <button type="submit" class="btn btn-submit-post" id="submitPostBtn">
+                    <span>Đăng bài ngay</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="sort-control-bar">
+            <div class="sort-tabs-group">
+              <button class="sort-btn active" data-sort="featured">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
+                </svg>
+                Bài viết nổi bật
+              </button>
+
+              <button class="sort-btn" data-sort="newest">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Bài viết mới nhất
+              </button>
+
+              <button class="sort-btn" data-sort="rising">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+                Bài viết đang lên
+              </button>
+            </div>
+
+            <span class="feed-count-summary">4 bài viết</span>
+          </div>
+
+          <div class="feed-posts" id="feedList">
+
+            <article class="post-card" data-category="notice" data-score="128" data-timestamp="1710000000"
+              data-comments="24">
+              <div class="post-card-header">
+                <div class="post-author-box">
+                  <div class="author-circle author-blue">PĐ</div>
+                  <div class="author-info-group">
+                    <span class="author-heading">Phòng Đào tạo HUCE</span>
+                    <span class="author-subtext">Giảng viên / Quản trị viên • 2 giờ trước</span>
+                  </div>
+                </div>
+                <span class="post-tag tag-blue">#Học_tập</span>
+              </div>
+
+              <h2 class="post-heading-title">
+                Hướng dẫn đăng ký học phần học kỳ mới năm học 2026
+              </h2>
+              <p class="post-content-body">
+                Sinh viên vui lòng kiểm tra thời gian đăng ký theo khóa và hoàn thành học phí đúng hạn. Nếu cần hỗ trợ
+                kỹ thuật hoặc giải đáp thắc mắc về điều kiện tiên quyết, hãy đặt câu hỏi ngay dưới bài viết này.
+              </p>
+
+              <div class="post-action-bar">
+                <div class="left-vote-group">
+                  <div class="vote-control">
+                    <button class="vote-btn vote-btn-up" title="Upvote câu trả lời/bài viết">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                    </button>
+                    <span class="vote-score" data-score="128">128</span>
+                    <button class="vote-btn vote-btn-down" title="Downvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <button class="action-text-btn btn-comment-post">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>24 bình luận</span>
+                  </button>
+                </div>
+
+                <button class="action-text-btn btn-share-post" title="Chia sẻ liên kết">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                  <span>Chia sẻ</span>
+                </button>
+              </div>
+
+              <div class="post-comments-container" style="display: none;">
+                <div class="comments-section-header">
+                  <div class="comments-title-wrap">
+                    <h3 class="comments-heading">Thảo luận công khai</h3>
+                    <span class="comments-counter-badge">24 bình luận</span>
+                  </div>
+                  <div class="comments-sort-wrap">
+                    <span class="comments-sort-label">Sắp xếp:</span>
+                    <button type="button" class="btn-sort-comment active">Mới nhất</button>
+                    <button type="button" class="btn-sort-comment">Hữu ích nhất</button>
+                  </div>
+                </div>
+
+                <form class="comment-input-form">
+                  <div class="comment-author-avatar">LN</div>
+                  <div class="comment-input-wrap">
+                    <textarea class="comment-textarea" placeholder="Viết phản hồi học thuật hoặc câu hỏi..." rows="1" required></textarea>
+                    <div class="comment-form-toolbar">
+                      <div class="comment-quick-tags">
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Hỏi_thêm">#Hỏi_thêm</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Giải_pháp">#Giải_pháp</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Tham_khảo">#Tham_khảo</button>
+                      </div>
+                      <button type="submit" class="btn-submit-comment">
+                        <span>Gửi</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="comments-list">
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-gv">TH</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">ThS. Trần Hoàng Nam</span>
+                          <span class="badge-role-lecturer">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            Giảng viên • Cố vấn học tập
+                          </span>
+                        </div>
+                        <span class="comment-timestamp">2 giờ trước</span>
+                      </div>
+                      <div class="comment-text">
+                        Các bạn sinh viên lưu ý thời gian mở cổng đợt 1 ưu tiên cho khóa làm tốt nghiệp và K65. Nếu gặp lỗi nghẽn server cổng tín chỉ HUCE lúc 8h sáng, các em chụp ảnh màn hình mã sinh viên và gửi vào email daotao@huce.edu.vn để được hỗ trợ mở lớp tăng cường kịp thời.
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false" title="Đánh giá bình luận hữu ích">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">18</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="ThS. Trần Hoàng Nam" title="Trả lời bình luận này">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+
+                      <div class="comment-reply-thread">
+                        <div class="comment-item">
+                          <div class="comment-avatar avatar-student">HL</div>
+                          <div class="comment-body-wrap">
+                            <div class="comment-meta-row">
+                              <div class="comment-author-meta">
+                                <span class="comment-author-name">Hoàng Long</span>
+                                <span class="badge-role-student">Sinh viên K67 • Kinh tế XD</span>
+                              </div>
+                              <span class="comment-timestamp">1 giờ trước</span>
+                            </div>
+                            <div class="comment-text">
+                              Thầy ơi cho em hỏi nếu muốn đăng ký cải thiện môn Cơ học cơ sở thì có cần làm đơn xin xác nhận của khoa trước không ạ?
+                            </div>
+                            <div class="comment-action-row">
+                              <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <span class="upvote-count">4</span>
+                              </button>
+                              <button type="button" class="comment-reply-btn" data-reply-to="Hoàng Long">
+                                <span>Trả lời</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="comment-item">
+                          <div class="comment-avatar avatar-gv">TH</div>
+                          <div class="comment-body-wrap">
+                            <div class="comment-meta-row">
+                              <div class="comment-author-meta">
+                                <span class="comment-author-name">ThS. Trần Hoàng Nam</span>
+                                <span class="badge-role-lecturer">Giảng viên</span>
+                              </div>
+                              <span class="comment-timestamp">45 phút trước</span>
+                            </div>
+                            <div class="comment-text">
+                              @Hoàng Long Không cần làm đơn em nhé, đợt 2 hệ thống sẽ tự mở thêm chỉ tiêu cho các lớp học lại và cải thiện điểm.
+                            </div>
+                            <div class="comment-action-row">
+                              <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <span class="upvote-count">7</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-student">MC</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">Nguyễn Mai Chi</span>
+                          <span class="badge-role-student">Sinh viên K68 • Cầu Đường</span>
+                        </div>
+                        <span class="comment-timestamp">30 phút trước</span>
+                      </div>
+                      <div class="comment-text">
+                        Cảm ơn Phòng Đào tạo đã hỗ trợ thêm cổng thanh toán VNPAY/VietinBank rất tiện lợi, sinh viên không cần phải xếp hàng nộp học phí trực tiếp tại nhà H1 nữa!
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">9</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="Nguyễn Mai Chi">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="post-card" data-category="question" data-score="46" data-timestamp="1709900000"
+              data-comments="18">
+              <div class="post-card-header">
+                <div class="post-author-box">
+                  <div class="author-circle author-purple">MA</div>
+                  <div class="author-info-group">
+                    <span class="author-heading">Minh Anh</span>
+                    <span class="author-subtext">Sinh viên K66 • Khoa Cầu Đường • 4 giờ trước</span>
+                  </div>
+                </div>
+                <span class="post-tag">#Câu_hỏi</span>
+              </div>
+
+              <h2 class="post-heading-title">
+                Xin kinh nghiệm học môn Cơ học kết cấu 1
+              </h2>
+              <p class="post-content-body">
+                Mọi người có thể chia sẻ tài liệu và cách ôn tập hiệu quả cho phần vẽ biểu đồ nội lực hệ dầm và giàn
+                không ạ? Mình đang chuẩn bị cho bài kiểm tra giữa kỳ vào tuần sau.
+              </p>
+
+              <div class="post-action-bar">
+                <div class="left-vote-group">
+                  <div class="vote-control">
+                    <button class="vote-btn vote-btn-up" title="Upvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                    </button>
+                    <span class="vote-score" data-score="46">46</span>
+                    <button class="vote-btn vote-btn-down" title="Downvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <button class="action-text-btn btn-comment-post">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>18 bình luận</span>
+                  </button>
+                </div>
+
+                <button class="action-text-btn btn-share-post" title="Chia sẻ liên kết">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                  <span>Chia sẻ</span>
+                </button>
+              </div>
+
+              <div class="post-comments-container" style="display: none;">
+                <div class="comments-section-header">
+                  <div class="comments-title-wrap">
+                    <h3 class="comments-heading">Thảo luận công khai</h3>
+                    <span class="comments-counter-badge">18 bình luận</span>
+                  </div>
+                  <div class="comments-sort-wrap">
+                    <span class="comments-sort-label">Sắp xếp:</span>
+                    <button type="button" class="btn-sort-comment active">Mới nhất</button>
+                    <button type="button" class="btn-sort-comment">Hữu ích nhất</button>
+                  </div>
+                </div>
+
+                <form class="comment-input-form">
+                  <div class="comment-author-avatar">LN</div>
+                  <div class="comment-input-wrap">
+                    <textarea class="comment-textarea" placeholder="Chia sẻ công thức hoặc phương pháp giải..." rows="1" required></textarea>
+                    <div class="comment-form-toolbar">
+                      <div class="comment-quick-tags">
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Giải_pháp">#Giải_pháp</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Công_thức">#Công_thức</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Phần_mềm">#Phần_mềm</button>
+                      </div>
+                      <button type="submit" class="btn-submit-comment">
+                        <span>Gửi</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="comments-list">
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-gv">LT</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">TS. Lê Viết Tuấn</span>
+                          <span class="badge-role-lecturer">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            Bộ môn Cơ học Kết cấu
+                          </span>
+                          <span class="badge-verified-answer">✓ Lời giải chính xác</span>
+                        </div>
+                        <span class="comment-timestamp">3 giờ trước</span>
+                      </div>
+                      <div class="comment-text">
+                        Đối với dầm liên tục 3 nhịp chịu tải trọng phân bố đều q, em nên giải bằng phương pháp lực hoặc phương pháp phương trình 3 mô men. Tại gối tựa giữa số 1 và 2, mô men âm cực đại là <strong>M = 0.1 * q * l²</strong>, còn mô men dương ở nhịp giữa là <strong>M = 0.08 * q * l²</strong>. Chú ý bước nhảy lực cắt tại các vị trí phản lực gối tựa.
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false" title="Đánh giá bình luận hữu ích">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">26</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="TS. Lê Viết Tuấn" title="Trả lời bình luận này">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+
+                      <div class="comment-reply-thread">
+                        <div class="comment-item">
+                          <div class="comment-avatar avatar-student">MA</div>
+                          <div class="comment-body-wrap">
+                            <div class="comment-meta-row">
+                              <div class="comment-author-meta">
+                                <span class="comment-author-name">Minh Anh</span>
+                                <span class="badge-role-student">Tác giả câu hỏi</span>
+                              </div>
+                              <span class="comment-timestamp">2 giờ trước</span>
+                            </div>
+                            <div class="comment-text">
+                              Em cảm ơn thầy Tuấn nhiều ạ! Hóa ra em bị nhầm dấu quy ước ở gối biên nên vẽ biểu đồ mô men bị ngược chiều trên dưới. Giờ em đã hiểu rõ cách tính rồi ạ!
+                            </div>
+                            <div class="comment-action-row">
+                              <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <span class="upvote-count">6</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-student">QK</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">Đỗ Quang Khải</span>
+                          <span class="badge-role-student">K65 • Khoa Cầu Đường</span>
+                        </div>
+                        <span class="comment-timestamp">2 giờ trước</span>
+                      </div>
+                      <div class="comment-text">
+                        Bạn có thể dùng phần mềm Ftool hoặc SAP2000 mô phỏng lại để đối chiếu kết quả nhé! Mình có file mẫu Ftool dầm liên tục đã gán tải sẵn, nếu cần inbox mình gửi cho nha.
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">11</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="Đỗ Quang Khải">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="post-card" data-category="question" data-score="89" data-timestamp="1710100000"
+              data-comments="35">
+              <div class="post-card-header">
+                <div class="post-author-box">
+                  <div class="author-circle author-blue">QT</div>
+                  <div class="author-info-group">
+                    <span class="author-heading">Nguyễn Quốc Tuấn</span>
+                    <span class="author-subtext">Sinh viên Khoa Xây dựng Dân dụng & CN • 1 giờ trước</span>
+                  </div>
+                </div>
+                <span class="post-tag tag-blue">#Bê_tông_cốt_thép</span>
+              </div>
+
+              <h2 class="post-heading-title">
+                Cách xác định vị trí trục trung hòa trong dầm bê tông cốt thép chịu uốn xiên?
+              </h2>
+              <p class="post-content-body">
+                Thưa thầy cô và các bạn, em đang làm đồ án Bê tông 1 nhưng gặp khó khi tính ứng suất trong trường hợp
+                uốn xiên thuần túy theo TCVN 5574:2018...
+              </p>
+
+              <div class="feed-accepted-answer">
+                <div class="feed-answer-header">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <strong style="font-size: 13.5px; color: var(--navy);">TS. Trần Quang Hưng</strong>
+                    <span class="feed-lecturer-badge">Verified GV</span>
+                  </div>
+                  <span class="feed-verified-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                      </polygon>
+                    </svg>
+                    Câu trả lời chính thức
+                  </span>
+                </div>
+                <p class="feed-answer-text">
+                  "Chào Tuấn! Với dầm chịu uốn xiên, em phân tích mô men uốn thành Mx và My theo 2 trục quán tính chính.
+                  Phương trình trục trung hòa là (Mx/Ix)•y + (My/Iy)•x = 0, sau đó xác định vùng nén và cốt thép chịu
+                  kéo tương ứng."
+                </p>
+              </div>
+
+              <div class="post-action-bar">
+                <div class="left-vote-group">
+                  <div class="vote-control">
+                    <button class="vote-btn vote-btn-up" title="Upvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                    </button>
+                    <span class="vote-score" data-score="89">89</span>
+                    <button class="vote-btn vote-btn-down" title="Downvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <button class="action-text-btn btn-comment-post">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>35 bình luận</span>
+                  </button>
+                </div>
+
+                <button class="action-text-btn btn-share-post" title="Chia sẻ liên kết">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                  <span>Chia sẻ</span>
+                </button>
+              </div>
+
+              <div class="post-comments-container" style="display: none;">
+                <div class="comments-section-header">
+                  <div class="comments-title-wrap">
+                    <h3 class="comments-heading">Thảo luận công khai</h3>
+                    <span class="comments-counter-badge">35 bình luận</span>
+                  </div>
+                  <div class="comments-sort-wrap">
+                    <span class="comments-sort-label">Sắp xếp:</span>
+                    <button type="button" class="btn-sort-comment active">Mới nhất</button>
+                    <button type="button" class="btn-sort-comment">Hữu ích nhất</button>
+                  </div>
+                </div>
+
+                <form class="comment-input-form">
+                  <div class="comment-author-avatar">LN</div>
+                  <div class="comment-input-wrap">
+                    <textarea class="comment-textarea" placeholder="Viết phản hồi hoặc chia sẻ thực tế thi công..." rows="1" required></textarea>
+                    <div class="comment-form-toolbar">
+                      <div class="comment-quick-tags">
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Thi_công">#Thi_công</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Đồ_án_TN">#Đồ_án_TN</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Tiêu_chuẩn">#Tiêu_chuẩn</button>
+                      </div>
+                      <button type="submit" class="btn-submit-comment">
+                        <span>Gửi</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="comments-list">
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-gv">NC</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">PGS.TS Nguyễn Đình Cường</span>
+                          <span class="badge-role-lecturer">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            Khoa Xây dựng DD&CN • HUCE
+                          </span>
+                          <span class="badge-verified-answer">✓ Chuyên gia Đánh giá</span>
+                        </div>
+                        <span class="comment-timestamp">40 phút trước</span>
+                      </div>
+                      <div class="comment-text">
+                        Bài viết phân tích rất chuẩn về mô hình đàn hồi Winkler và việc xác định hệ số nền Cz. Với khu vực Hoàng Mai hoặc Thanh Trì có túi bùn sâu, các em cần chú ý thêm lún lệch giữa các trục và đặc biệt là kiểm tra khả năng chống chọc thủng tại nút giao dầm móng theo TCVN 5574:2018.
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false" title="Đánh giá bình luận hữu ích">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">38</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="PGS.TS Nguyễn Đình Cường">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-student">TD</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">Lê Trí Dũng</span>
+                          <span class="badge-role-student">Cựu sinh viên K62 • Kỹ sư hiện trường</span>
+                        </div>
+                        <span class="comment-timestamp">30 phút trước</span>
+                      </div>
+                      <div class="comment-text">
+                        Kinh nghiệm thực chiến ngoài công trường là anh em nên bố trí thêm thép đai dày cấu tạo ở nút giao và dầm sườn móng, khi đổ bê tông R28 đầm dùi thật kỹ tránh bị rỗ tổ ong ở đáy dầm nhé!
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">14</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="Lê Trí Dũng">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="post-card" data-category="share" data-score="215" data-timestamp="1709800000"
+              data-comments="42">
+              <div class="post-card-header">
+                <div class="post-author-box">
+                  <div class="author-circle author-blue">KT</div>
+                  <div class="author-info-group">
+                    <span class="author-heading">CLB Kiến Trúc & Quy Hoạch HUCE</span>
+                    <span class="author-subtext">Câu lạc bộ sinh viên • Hôm qua</span>
+                  </div>
+                </div>
+                <span class="post-tag">#Sự_kiện_CLB</span>
+              </div>
+
+              <h2 class="post-heading-title">
+                Workshop: Ứng dụng BIM & AI Tạo sinh trong thiết kế công trình xanh
+              </h2>
+              <p class="post-content-body">
+                Kính mời toàn thể các bạn sinh viên quan tâm đến công nghệ kiến trúc số tham dự buổi chia sẻ thực chiến
+                cùng các chuyên gia hàng đầu từ tập đoàn Coteccons và Autodesk Việt Nam vào thứ 7 tuần này tại Hội
+                trường G3.
+              </p>
+
+              <div class="post-action-bar">
+                <div class="left-vote-group">
+                  <div class="vote-control">
+                    <button class="vote-btn vote-btn-up" title="Upvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19V5M5 12l7-7 7 7" />
+                      </svg>
+                    </button>
+                    <span class="vote-score" data-score="215">215</span>
+                    <button class="vote-btn vote-btn-down" title="Downvote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <button class="action-text-btn btn-comment-post">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>42 bình luận</span>
+                  </button>
+                </div>
+
+                <button class="action-text-btn btn-share-post" title="Chia sẻ liên kết">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                  <span>Chia sẻ</span>
+                </button>
+              </div>
+
+              <div class="post-comments-container" style="display: none;">
+                <div class="comments-section-header">
+                  <div class="comments-title-wrap">
+                    <h3 class="comments-heading">Thảo luận công khai</h3>
+                    <span class="comments-counter-badge">42 bình luận</span>
+                  </div>
+                  <div class="comments-sort-wrap">
+                    <span class="comments-sort-label">Sắp xếp:</span>
+                    <button type="button" class="btn-sort-comment active">Mới nhất</button>
+                    <button type="button" class="btn-sort-comment">Hữu ích nhất</button>
+                  </div>
+                </div>
+
+                <form class="comment-input-form">
+                  <div class="comment-author-avatar">LN</div>
+                  <div class="comment-input-wrap">
+                    <textarea class="comment-textarea" placeholder="Đặt câu hỏi cho diễn giả hoặc trao đổi..." rows="1" required></textarea>
+                    <div class="comment-form-toolbar">
+                      <div class="comment-quick-tags">
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Hỏi_CLB">#Hỏi_CLB</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Đăng_ký">#Đăng_ký</button>
+                        <button type="button" class="quick-tag-chip" data-insert-tag="#Tài_liệu">#Tài_liệu</button>
+                      </div>
+                      <button type="submit" class="btn-submit-comment">
+                        <span>Gửi</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="comments-list">
+                  <div class="comment-item">
+                    <div class="comment-avatar avatar-lead">HĐ</div>
+                    <div class="comment-body-wrap">
+                      <div class="comment-meta-row">
+                        <div class="comment-author-meta">
+                          <span class="comment-author-name">KTS. Phạm Hải Đăng</span>
+                          <span class="badge-role-lead">Chủ nhiệm CLB Kiến Trúc HUCE</span>
+                        </div>
+                        <span class="comment-timestamp">5 giờ trước</span>
+                      </div>
+                      <div class="comment-text">
+                        CLB đã chính thức mở link đăng ký giữ chỗ tại Hội trường G3 (chỉ có 200 suất trực tiếp kèm chứng chỉ tham dự từ Autodesk & Coteccons). Các bạn nhớ mang theo laptop đã cài sẵn Revit/Rhino để tham gia thực hành mini workshop nhé!
+                      </div>
+                      <div class="comment-action-row">
+                        <button type="button" class="comment-upvote-btn" data-upvoted="false" title="Đánh giá bình luận hữu ích">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                          </svg>
+                          <span class="upvote-count">32</span>
+                        </button>
+                        <button type="button" class="comment-reply-btn" data-reply-to="KTS. Phạm Hải Đăng" title="Trả lời bình luận này">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 17 4 12 9 7"></polyline>
+                            <path d="M20 18v-2a4 4 0 0 0-4-4H4"></path>
+                          </svg>
+                          <span>Trả lời</span>
+                        </button>
+                      </div>
+
+                      <div class="comment-reply-thread">
+                        <div class="comment-item">
+                          <div class="comment-avatar avatar-student">GH</div>
+                          <div class="comment-body-wrap">
+                            <div class="comment-meta-row">
+                              <div class="comment-author-meta">
+                                <span class="comment-author-name">Trần Gia Huy</span>
+                                <span class="badge-role-student">Sinh viên K67 • Khoa Kiến Trúc</span>
+                              </div>
+                              <span class="comment-timestamp">4 giờ trước</span>
+                            </div>
+                            <div class="comment-text">
+                              Anh ơi buổi workshop có livestream hoặc record lại cho các bạn bận học đồ án sáng thứ 7 xem lại không ạ?
+                            </div>
+                            <div class="comment-action-row">
+                              <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <span class="upvote-count">5</span>
+                              </button>
+                              <button type="button" class="comment-reply-btn" data-reply-to="Trần Gia Huy">
+                                <span>Trả lời</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="comment-item">
+                          <div class="comment-avatar avatar-lead">HĐ</div>
+                          <div class="comment-body-wrap">
+                            <div class="comment-meta-row">
+                              <div class="comment-author-meta">
+                                <span class="comment-author-name">KTS. Phạm Hải Đăng</span>
+                                <span class="badge-role-lead">CLB Kiến Trúc</span>
+                              </div>
+                              <span class="comment-timestamp">3 giờ trước</span>
+                            </div>
+                            <div class="comment-text">
+                              @Trần Gia Huy: Có em nhé! CLB sẽ phát sóng trực tiếp trên fanpage CLB và tải tài liệu slide lên kho UniConnect sau buổi học.
+                            </div>
+                            <div class="comment-action-row">
+                              <button type="button" class="comment-upvote-btn" data-upvoted="false">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                                </svg>
+                                <span class="upvote-count">12</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <aside class="widgets-column">
+
+          <div class="widget-card">
+            <div class="widget-header">
+              <h3 class="widget-title">Hỗ trợ học tập</h3>
+              <svg class="widget-help-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+
+            <div class="advisor-list">
+              <div class="advisor-item">
+                <div class="advisor-avatar">
+                  NT
+                  <span class="online-dot"></span>
+                </div>
+                <div class="advisor-info">
+                  <span class="advisor-name">TS. Nguyễn Thành Nam</span>
+                  <span class="advisor-status">Khoa CNTT • Đang hoạt động</span>
+                </div>
+              </div>
+
+              <div class="advisor-item">
+                <div class="advisor-avatar">
+                  TH
+                  <span class="online-dot" style="background-color: #F59E0B;"></span>
+                </div>
+                <div class="advisor-info">
+                  <span class="advisor-name">ThS. Trần Thu Hà</span>
+                  <span class="advisor-status">Khoa Kinh tế • Phản hồi ~1h</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-message-lecturer" id="msgLecturerBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>Nhắn tin giảng viên 🔒</span>
+            </button>
+          </div>
+
+          <div class="widget-card">
+            <div class="widget-header">
+              <h3 class="widget-title">Chủ đề nổi bật</h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+            </div>
+
+            <div class="trending-list">
+              <div class="trending-item">
+                <span class="trending-rank">01</span>
+                <div class="trending-info">
+                  <span class="trending-tag">#Đăng_ký_tín_chỉ</span>
+                  <span class="trending-count">1200 bài viết</span>
+                </div>
+              </div>
+
+              <div class="trending-item">
+                <span class="trending-rank">02</span>
+                <div class="trending-info">
+                  <span class="trending-tag">#Tuyển_thực_tập</span>
+                  <span class="trending-count">953 bài viết</span>
+                </div>
+              </div>
+
+              <div class="trending-item">
+                <span class="trending-rank">03</span>
+                <div class="trending-info">
+                  <span class="trending-tag">#Mùa_thi_2026</span>
+                  <span class="trending-count">706 bài viết</span>
+                </div>
+              </div>
+
+              <div class="trending-item">
+                <span class="trending-rank">04</span>
+                <div class="trending-info">
+                  <span class="trending-tag">#Ngày_hội_CLB</span>
+                  <span class="trending-count">459 bài viết</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="widget-mini-footer">
+            <p><a href="#">Giới thiệu</a> • <a href="#">Quy tắc cộng đồng</a> • <a href="#">Quyền riêng tư</a></p>
+            <p>© 2026 UniConnect HUCE</p>
+          </div>
+
+        </aside>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="notification-drawer-overlay" id="notificationOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="notification-drawer" id="notificationDrawer">
+      <div class="notif-header">
+        <div class="notif-title-group">
+          <div class="notif-title-row">
+            <h3 class="notif-heading">Trung tâm Thông báo</h3>
+            <span class="live-realtime-badge">
+              <span class="live-pulse-dot"></span>
+              Realtime Live
+            </span>
+          </div>
+          <p class="notif-subtext">Cập nhật tương tác, bài viết và hoạt động mới theo thời gian thực</p>
+        </div>
+        <button class="notif-close-btn" id="closeNotifBtn" aria-label="Đóng">&times;</button>
+      </div>
+
+      <div class="notif-tabs">
+        <button class="notif-tab active" data-notif-filter="all">Tất cả (<span id="notifTotalCount">6</span>)</button>
+        <button class="notif-tab" data-notif-filter="user_interaction">Tương tác của bạn</button>
+        <button class="notif-tab" data-notif-filter="new_post">Bài viết mới</button>
+        <button class="notif-tab" data-notif-filter="new_activity">Hoạt động mới</button>
+      </div>
+
+      <div class="notif-actions-bar">
+        <span class="unread-status-text" id="unreadStatusText">Bạn có <strong id="unreadCountDisplay">3</strong> thông
+          báo chưa đọc</span>
+        <button class="btn-mark-all-read" id="markAllReadBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Đánh dấu đã đọc tất cả
+        </button>
+      </div>
+
+      <div class="notif-items-list" id="notifItemsList">
+        <div class="notif-item unread" data-type="user_interaction">
+          <div class="notif-avatar notif-avatar-gv">GV</div>
+          <div class="notif-content">
+            <div class="notif-header-line">
+              <span class="notif-badge-tag tag-interaction">Tương tác với bạn</span>
+              <span class="notif-time">2 phút trước</span>
+            </div>
+            <p class="notif-text"><strong>TS. Trần Quang Hưng</strong> đã trả lời câu hỏi của bạn: <em>"Cách xác định vị
+                trí trục trung hòa trong dầm bê tông..."</em></p>
+            <div class="notif-action-preview">"Chào Tuấn! Với dầm chịu uốn xiên, em chia mô men ngoại lực thành 2 thành
+              phần..."</div>
+          </div>
+          <span class="unread-dot"></span>
+        </div>
+
+        <div class="notif-item unread" data-type="user_interaction">
+          <div class="notif-avatar notif-avatar-upvote">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </div>
+          <div class="notif-content">
+            <div class="notif-header-line">
+              <span class="notif-badge-tag tag-interaction">Tương tác với bạn</span>
+              <span class="notif-time">15 phút trước</span>
+            </div>
+            <p class="notif-text"><strong>Minh Anh</strong> và <strong>14 sinh viên khác</strong> đã upvote câu hỏi của
+              bạn về <em>#Sức_bền_vật_liệu</em>.</p>
+          </div>
+          <span class="unread-dot"></span>
+        </div>
+
+        <div class="notif-item unread" data-type="new_post">
+          <div class="notif-avatar notif-avatar-notice">PĐ</div>
+          <div class="notif-content">
+            <div class="notif-header-line">
+              <span class="notif-badge-tag tag-post">Bài viết mới</span>
+              <span class="notif-time">35 phút trước</span>
+            </div>
+            <p class="notif-text"><strong>Phòng Đào tạo HUCE</strong> vừa đăng bài viết học thuật: <em>"Hướng dẫn đăng
+                ký học phần học kỳ mới năm học 2026"</em>.</p>
+          </div>
+          <span class="unread-dot"></span>
+        </div>
+
+        <div class="notif-item read" data-type="new_activity">
+          <div class="notif-avatar notif-avatar-activity">CLB</div>
+          <div class="notif-content">
+            <div class="notif-header-line">
+              <span class="notif-badge-tag tag-activity">Hoạt động mới</span>
+              <span class="notif-time">2 giờ trước</span>
+            </div>
+            <p class="notif-text"><strong>CLB Kiến Trúc & Quy Hoạch HUCE</strong> mở đăng ký sự kiện: <em>"Workshop Ứng
+                dụng BIM & AI Tạo sinh trong thiết kế"</em> tại Hội trường G3.</p>
+          </div>
+        </div>
+
+        <div class="notif-item read" data-type="user_interaction">
+          <div class="notif-avatar notif-avatar-dm">TH</div>
+          <div class="notif-content">
+            <div class="notif-header-line">
+              <span class="notif-badge-tag tag-interaction">Tương tác với bạn</span>
+              <span class="notif-time">5 giờ trước</span>
+            </div>
+            <p class="notif-text"><strong>ThS. Trần Thu Hà</strong> đã gửi phản hồi riêng trong kênh học tập cho bạn.
+            </p>
+          </div>
+        </div>
+
+        <div class="notif-item read" data-type="new_activity">
+          <div class="notif-avatar notif-avatar-huce">ĐN</div>
+          <div class="notif-content">
+            <div class="notif-header-line">
+              <span class="notif-badge-tag tag-activity">Hoạt động mới</span>
+              <span class="notif-time">Hôm qua</span>
+            </div>
+            <p class="notif-text"><strong>Đoàn Thanh Niên HUCE</strong> phát động: <em>"Cuộc thi Sinh viên Nghiên cứu
+                Khoa học & Sáng tạo Công nghệ 2026"</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="notif-footer-status">
+        <div class="connection-status">
+          <span class="status-indicator-dot"></span>
+          <span>Đang kết nối Realtime HUCE...</span>
+        </div>
+        <button type="button" class="btn-test-simulation" id="btnTestSimulation"
+          title="Nhấn để nhận ngay 1 thông báo mới thử nghiệm">
+          + Giả lập thông báo mới
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-drawer-header">
+        <div class="mobile-drawer-user">
+          <div class="user-avatar-lg">LN</div>
+          <div class="drawer-user-info">
+            <span class="drawer-user-name">Linh Nguyễn</span>
+            <span class="drawer-user-role">Sinh viên K21 • Khoa Xây dựng HUCE</span>
+            <span class="drawer-user-badge">Thành viên tích cực</span>
+          </div>
+        </div>
+        <button class="mobile-drawer-close" id="closeMobileDrawerBtn" aria-label="Đóng Menu">&times;</button>
+      </div>
+
+      <div class="mobile-drawer-content">
+        <div class="mobile-drawer-section">
+          <span class="drawer-section-title">Điều hướng chính</span>
+          <ul class="mobile-nav-list">
+            <li>
+              <a href="main.html" class="mobile-nav-link active">
+                <span class="nav-icon-mobile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </span>
+                <span class="nav-link-text">Bảng tin</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="mobile-nav-link">
+                <span class="nav-icon-mobile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                </span>
+                <span class="nav-link-text">Khám phá</span>
+                <span class="lock-icon">🔒</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="mobile-nav-link">
+                <span class="nav-icon-mobile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                </span>
+                <span class="nav-link-text">Tin nhắn</span>
+                <span class="lock-icon">🔒</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="mobile-nav-link">
+                <span class="nav-icon-mobile">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <span class="nav-link-text">Đã lưu</span>
+                <span class="lock-icon">🔒</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mobile-drawer-section">
+          <span class="drawer-section-title">Chủ đề & Chuyên ngành HUCE</span>
+          <div class="mobile-subject-tags">
+            <button type="button" class="mobile-tag-btn" data-subject-filter="#Bê_tông_cốt_thép">#Bê_tông_cốt_thép</button>
+            <button type="button" class="mobile-tag-btn" data-subject-filter="#Sức_bền_vật_liệu">#Sức_bền_vật_liệu</button>
+            <button type="button" class="mobile-tag-btn" data-subject-filter="#Cơ_học_kết_cấu">#Cơ_học_kết_cấu</button>
+            <button type="button" class="mobile-tag-btn" data-subject-filter="#CNTT_HUCE">#CNTT_HUCE</button>
+            <button type="button" class="mobile-tag-btn" data-subject-filter="#Kinh_tế_xây_dựng">#Kinh_tế_xây_dựng</button>
+            <button type="button" class="mobile-tag-btn" data-subject-filter="#Kiến_trúc_HUCE">#Kiến_trúc_HUCE</button>
+          </div>
+        </div>
+
+        <div class="mobile-community-card">
+          <div class="community-card-icon">🌟</div>
+          <div>
+            <span class="community-card-title">Cộng đồng tích cực HUCE</span>
+            <p class="community-card-desc">Tôn trọng và giúp đỡ nhau trong mọi cuộc thảo luận học thuật.</p>
+          </div>
+        </div>
+
+        <div class="mobile-drawer-footer">
+          <a href="index.html" class="mobile-logout-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Đăng xuất tài khoản</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Điều hướng chính di động">
+    <button type="button" class="bottom-nav-item active" id="bottomNavHome" aria-label="Bảng tin">
+      <div class="bottom-nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </div>
+      <span class="bottom-nav-label">Bảng tin</span>
+    </button>
+
+    <button type="button" class="bottom-nav-item" id="bottomNavExplore" aria-label="Khám phá">
+      <div class="bottom-nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </svg>
+      </div>
+      <span class="bottom-nav-label">Khám phá</span>
+    </button>
+
+    <button type="button" class="bottom-nav-item bottom-nav-fab" id="bottomNavPost" aria-label="Đăng câu hỏi học thuật mới">
+      <div class="fab-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </div>
+      <span class="bottom-nav-label">Đăng bài</span>
+    </button>
+
+    <button type="button" class="bottom-nav-item" id="bottomNavNotif" aria-label="Thông báo thời gian thực">
+      <div class="bottom-nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span class="badge-count bottom-badge" data-notif-badge id="bottomNavNotifBadge">3</span>
+      </div>
+      <span class="bottom-nav-label">Thông báo</span>
+    </button>
+
+    <button type="button" class="bottom-nav-item" id="bottomNavMenu" aria-label="Menu & Chuyên mục">
+      <div class="bottom-nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </div>
+      <span class="bottom-nav-label">Menu</span>
+    </button>
+  </nav>
+
+  <script src="js/utils/toast.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  <script src="js/modules/vote.js"></script>
+  <script src="js/modules/comments.js"></script>
+  <script src="js/modules/postComposer.js"></script>
+  <script src="js/modules/sort.js"></script>
+  <script src="js/modules/search.js"></script>
+  <script src="js/modules/notifications.js"></script>
+  <script src="js/modules/mobileNavigation.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
