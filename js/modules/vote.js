@@ -1,52 +1,47 @@
 ﻿function bindVoteControls(container = document) {
     container.querySelectorAll('.vote-control').forEach(control => {
+
         if (control.dataset.bound) return;
         control.dataset.bound = "true";
 
         const upBtn = control.querySelector('.vote-btn-up');
-        const downt = control.querySelector('.vote-btn-down');
         const scoreEl = control.querySelector('.vote-score');
 
-        if (!upBtn || !downBtn || !scoreEl) return;
-        const initialScore = parsenInt(scoreEl.getAttribute('data-score') || scoreEl.textContent, 10);
+        if (!upBtn || !scoreEl) return;
 
-        let currentVote = 0;
+        const initialScore = parseInt(scoreEl.getAttribute('data-score') || scoreEl.textContent, 10) || 0;
+        let isUpvoted = control.classList.contains('has-upvoted');
 
-        upBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
+        const toggleUpvote = (e) => {
+            if (e) e.stopPropagation();
 
-            if (currentVote === 1) {
-                currentVote = 0;
-                control.classList.remove('has-downvoted');
+            isUpvoted = !isUpvoted;
+
+            if (isUpvoted) {
                 control.classList.add('has-upvoted');
-                scoreEl.textContent = initialScore + 1;
-
+                scoreEl.textContent = (initialScore + 1).toString();
                 if (typeof showToast === 'function') {
                     showToast('Đã upvote bài viết (+1)', 'feedToast');
                 }
-            }
-        });
-
-        downBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-
-            if (currentVote === -1) {
-                currentVote = 0;
-                control.classList.remove('has-downvoted');
-                scoreEl.textContent = initialScore;
-            }
-            else {
-                currentVote = -1;
+            } else {
                 control.classList.remove('has-upvoted');
-                container.classList.add('has-downvoted');
-                scoreEl.textContent = initialScore - 1;
-
+                scoreEl.textContent = initialScore.toString();
                 if (typeof showToast === 'function') {
-                    showToast('Đã downvote bài viết', 'feedToast');
+                    showToast('Đã hủy upvote bài viết', 'feedToast');
                 }
             }
+        };
+
+        // Hỗ trợ bấm vào nút mũi tên hoặc bấm cả khối vote-control để upvote thuận tiện
+        upBtn.addEventListener('click', toggleUpvote);
+        control.addEventListener('click', (e) => {
+            if (e.target !== upBtn && !upBtn.contains(e.target)) {
+                toggleUpvote(e);
+            }
         });
+
     });
 }
 
 window.bindVoteControls = bindVoteControls;
+

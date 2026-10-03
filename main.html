@@ -243,7 +243,7 @@
 
           <div class="post-create-box" id="postCreateBox">
             <div class="create-box-collapsed" id="createBoxCollapsed">
-              <div class="user-avatar-sm">LN</div>
+              <div class="user-avatar-sm" id="collapsedUserAvatar">LN</div>
               <div class="create-prompt-input" id="openComposerBtn">
                 <span>Đặt câu hỏi học thuật hoặc chia sẻ tài liệu HUCE mới...</span>
               </div>
@@ -260,13 +260,37 @@
             <form class="create-box-expanded" id="postCreateForm" style="display: none;">
               <div class="composer-header">
                 <div class="composer-user-meta">
-                  <div class="user-avatar-sm">LN</div>
+                  <div class="user-avatar-sm" id="composerAvatar">LN</div>
                   <div>
-                    <span class="composer-author-name">Linh Nguyễn</span>
-                    <span class="composer-author-sub">Sinh viên K21 • Khoa Xây dựng HUCE</span>
+                    <span class="composer-author-name" id="composerAuthorName">Linh Nguyễn</span>
+                    <span class="composer-author-sub" id="composerAuthorSub">Sinh viên K21 • Khoa Xây dựng HUCE</span>
                   </div>
                 </div>
                 <button type="button" class="composer-close-btn" id="closeComposerBtn" title="Đóng">&times;</button>
+              </div>
+
+              <!-- Phân loại mục đích đăng bài -->
+              <div class="composer-purpose-group">
+                <span class="tags-group-label">Mục đích đăng bài:</span>
+                <div class="composer-purpose-pills" id="composerPurposePills">
+                  <button type="button" class="purpose-select-btn active" data-purpose="question"
+                    data-category="question">
+                    <span class="purpose-icon">❓</span>
+                    <span>Hỏi đáp học thuật</span>
+                  </button>
+                  <button type="button" class="purpose-select-btn" data-purpose="resource" data-category="share">
+                    <span class="purpose-icon">📚</span>
+                    <span>Chia sẻ tài liệu</span>
+                  </button>
+                  <button type="button" class="purpose-select-btn" data-purpose="group" data-category="group">
+                    <span class="purpose-icon">👥</span>
+                    <span>Tìm nhóm đồ án</span>
+                  </button>
+                  <button type="button" class="purpose-select-btn" data-purpose="notice" data-category="notice">
+                    <span class="purpose-icon">📢</span>
+                    <span>Thông báo / Sự kiện</span>
+                  </button>
+                </div>
               </div>
 
               <div class="composer-field">
@@ -274,16 +298,31 @@
                   placeholder="Tiêu đề câu hỏi / chia sẻ học thuật (ví dụ: Cách tính độ võng dầm liên tục...)" required>
               </div>
 
+              <!-- Thẻ tag phù hợp với mục đích đăng bài -->
               <div class="composer-tags-group">
-                <span class="tags-group-label">Chọn môn học / chuyên ngành:</span>
+                <div class="tags-group-header">
+                  <span class="tags-group-label" id="composerTagsLabel">Thẻ môn học &amp; chủ đề câu hỏi:</span>
+                  <span class="tags-selected-hint" id="tagsSelectedHint">Đã chọn: <strong
+                      id="selectedTagText">#Bê_tông_cốt_thép</strong></span>
+                </div>
                 <div class="composer-tag-pills" id="composerTagPills">
                   <button type="button" class="tag-select-btn active"
                     data-tag="#Bê_tông_cốt_thép">#Bê_tông_cốt_thép</button>
-                  <button type="button" class="tag-select-btn" data-tag="#Sức_bền_vật_liệu">#Sức_bền_vật_liệu</button>
                   <button type="button" class="tag-select-btn" data-tag="#Cơ_học_kết_cấu">#Cơ_học_kết_cấu</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Sức_bền_vật_liệu">#Sức_bền_vật_liệu</button>
+                  <button type="button" class="tag-select-btn"
+                    data-tag="#Địa_kỹ_thuật_Nền_móng">#Địa_kỹ_thuật_Nền_móng</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Kiến_trúc_HUCE">#Kiến_trúc_HUCE</button>
                   <button type="button" class="tag-select-btn" data-tag="#CNTT_HUCE">#CNTT_HUCE</button>
                   <button type="button" class="tag-select-btn" data-tag="#Kinh_tế_xây_dựng">#Kinh_tế_xây_dựng</button>
-                  <button type="button" class="tag-select-btn" data-tag="#Kiến_trúc_HUCE">#Kiến_trúc_HUCE</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Hỏi_bài_tập">#Hỏi_bài_tập</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Đồ_án_môn_học">#Đồ_án_môn_học</button>
+                  <button type="button" class="tag-select-btn" data-tag="#Ôn_thi_học_kỳ">#Ôn_thi_học_kỳ</button>
+                </div>
+                <div class="composer-custom-tag-wrap">
+                  <input type="text" class="custom-tag-input" id="customTagInput"
+                    placeholder="+ Nhập tag riêng (VD: #Thep_2)..." maxlength="30">
+                  <button type="button" class="btn-add-custom-tag" id="btnAddCustomTag">Thêm tag</button>
                 </div>
               </div>
 
@@ -292,6 +331,14 @@
                   placeholder="Nhập chi tiết câu hỏi, đính kèm thông số bài toán để giảng viên và cộng đồng HUCE hỗ trợ giải đáp..."
                   required></textarea>
               </div>
+
+              <!-- Preview tệp đã đính kèm -->
+              <div class="composer-attachments-preview" id="composerAttachmentsPreview" style="display: none;"></div>
+
+              <!-- File inputs ẩn để chọn tệp thực tế -->
+              <input type="file" id="fileInputPhoto" accept="image/*" style="display: none;">
+              <input type="file" id="fileInputDoc" accept=".pdf,.doc,.docx,.xls,.xlsx,.dwg,.zip,.rar"
+                style="display: none;">
 
               <div class="composer-footer">
                 <div class="composer-media-actions">
@@ -314,7 +361,8 @@
                     </svg>
                     <span>Tài liệu PDF</span>
                   </button>
-                  <span class="composer-hint-badge">💡 Giảng viên sẽ trả lời & xác nhận</span>
+                  <span class="composer-hint-badge" id="composerHintBadge">💡 Giảng viên &amp; Cố vấn học tập sẽ hỗ trợ
+                    giải đáp</span>
                 </div>
 
                 <div class="composer-submit-group">
@@ -360,7 +408,7 @@
               </button>
             </div>
 
-            <span class="feed-count-summary">4 bài viết</span>
+            <span class="feed-count-summary" id="feedCountSummary">4 bài viết</span>
           </div>
 
           <div class="feed-posts" id="feedList">
@@ -395,11 +443,6 @@
                       </svg>
                     </button>
                     <span class="vote-score" data-score="128">128</span>
-                    <button class="vote-btn vote-btn-down" title="Downvote">
-                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12l7 7 7-7" />
-                      </svg>
-                    </button>
                   </div>
 
                   <button class="action-text-btn btn-comment-post">
@@ -627,11 +670,6 @@
                       </svg>
                     </button>
                     <span class="vote-score" data-score="46">46</span>
-                    <button class="vote-btn vote-btn-down" title="Downvote">
-                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12l7 7 7-7" />
-                      </svg>
-                    </button>
                   </div>
 
                   <button class="action-text-btn btn-comment-post">
@@ -854,11 +892,6 @@
                       </svg>
                     </button>
                     <span class="vote-score" data-score="89">89</span>
-                    <button class="vote-btn vote-btn-down" title="Downvote">
-                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12l7 7 7-7" />
-                      </svg>
-                    </button>
                   </div>
 
                   <button class="action-text-btn btn-comment-post">
@@ -1030,11 +1063,6 @@
                       </svg>
                     </button>
                     <span class="vote-score" data-score="215">215</span>
-                    <button class="vote-btn vote-btn-down" title="Downvote">
-                      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12l7 7 7-7" />
-                      </svg>
-                    </button>
                   </div>
 
                   <button class="action-text-btn btn-comment-post">

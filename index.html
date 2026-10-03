@@ -390,85 +390,201 @@
         <div class="modal-card">
             <button class="modal-close-btn" id="modalCloseBtn" aria-label="Đóng">&times;</button>
 
-            <div class="modal-tabs">
+            <div class="modal-tabs" id="authModalTabs">
                 <button class="modal-tab active" id="modalTabRegister">Đăng ký</button>
                 <button class="modal-tab" id="modalTabLogin">Đăng nhập</button>
             </div>
 
-            <h3 class="post-title" id="modalTitle" style="text-align: center; margin-bottom: 20px;">
-                Đăng ký tài khoản HUCE
-            </h3>
+            <!-- VIEW 1: Form nhập thông tin đăng ký / đăng nhập -->
+            <div id="authFormView">
+                <h3 class="post-title" id="modalTitle" style="text-align: center; margin-bottom: 20px;">
+                    Đăng ký tài khoản HUCE
+                </h3>
 
-            <form id="authForm">
-                <div class="form-group register-only">
-                    <label class="form-label" for="authFullName">Họ và tên</label>
-                    <input type="text" class="form-input" id="authFullName" placeholder="Nguyễn Văn A"
-                        value="Nguyễn Quốc Tuấn">
+                <form id="authForm">
+                    <div class="form-group register-only">
+                        <label class="form-label" for="authFullName">Họ và tên</label>
+                        <input type="text" class="form-input" id="authFullName" placeholder="Nguyễn Văn A"
+                            value="Nguyễn Quốc Tuấn">
+                    </div>
+
+                    <div class="form-group register-only">
+                        <label class="form-label" for="authRole">Bạn là</label>
+                        <select class="form-input" id="authRole">
+                            <option value="student">Sinh viên HUCE</option>
+                            <option value="lecturer">Giảng viên HUCE (Cần xác thực)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="authEmail">Email sinh viên HUCE (*@st.huce.edu.vn)</label>
+                        <input type="email" class="form-input" id="authEmail" required
+                            placeholder="tuan.nq@st.huce.edu.vn" value="tuan.nq@st.huce.edu.vn">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="authPassword">Mật khẩu</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-input" id="authPassword" required
+                                placeholder="Nhập mật khẩu an toàn..." autocomplete="new-password">
+                            <button type="button" class="btn-toggle-password" id="togglePasswordBtn"
+                                aria-label="Hiện/ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
+                                <svg id="eyeIcon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Password strength & checklist (chỉ hiện khi đăng ký) -->
+                        <div class="password-strength-container register-only" id="passwordStrengthBox">
+                            <div class="strength-meter-header">
+                                <span class="strength-label">Độ an toàn:</span>
+                                <span class="strength-text" id="strengthStatusText">Chưa nhập</span>
+                            </div>
+                            <div class="strength-meter-track">
+                                <div class="strength-meter-bar" id="strengthBar"></div>
+                            </div>
+
+                            <div class="password-criteria-list" id="passwordCriteria">
+                                <div class="criteria-item" id="critMinLength">
+                                    <span class="criteria-icon"></span>
+                                    <span class="criteria-text">Ít nhất 8 ký tự</span>
+                                </div>
+                                <div class="criteria-item" id="critUppercase">
+                                    <span class="criteria-icon"></span>
+                                    <span class="criteria-text">Ít nhất 1 ký tự viết hoa (A-Z)</span>
+                                </div>
+                                <div class="criteria-item" id="critLetterNumber">
+                                    <span class="criteria-icon"></span>
+                                    <span class="criteria-text">Đủ cả chữ cái và số</span>
+                                </div>
+                                <div class="criteria-item" id="critSpecialChar">
+                                    <span class="criteria-icon"></span>
+                                    <span class="criteria-text">Có ít nhất 1 ký tự đặc biệt (!@#$%...)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="authSubmitBtn"
+                        style="width: 100%; margin-top: 10px;">
+                        Tạo tài khoản ngay
+                    </button>
+                </form>
+            </div>
+
+            <!-- VIEW 2: Bước xác thực mã OTP 6 số gửi qua Email -->
+            <div id="otpStepView" style="display: none;">
+                <button type="button" class="btn-back-to-form" id="btnBackToAuthForm"
+                    title="Quay lại chỉnh sửa thông tin">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Quay lại</span>
+                </button>
+
+                <div class="otp-header">
+                    <div class="otp-badge-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2.2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                            </path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+
+                    <h3 class="otp-title">Xác thực mã OTP</h3>
+                    <p class="otp-subtitle">
+                        Mã xác thực <strong>6 chữ số</strong> đã được gửi tới email trường:
+                    </p>
+                    <div class="otp-email-chip" id="otpDisplayEmail">
+                        <span>tuan.nq@st.huce.edu.vn</span>
+                    </div>
                 </div>
 
-                <div class="form-group register-only">
-                    <label class="form-label" for="authRole">Bạn là</label>
-                    <select class="form-input" id="authRole">
-                        <option value="student">Sinh viên HUCE</option>
-                        <option value="lecturer">Giảng viên HUCE (Cần xác thực)</option>
-                    </select>
+                <div class="otp-form-group">
+                    <div class="otp-inputs-wrapper" id="otpInputsWrapper">
+                        <input type="text" class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                            data-index="0" autocomplete="off" aria-label="Ký tự OTP số 1">
+                        <input type="text" class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                            data-index="1" autocomplete="off" aria-label="Ký tự OTP số 2">
+                        <input type="text" class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                            data-index="2" autocomplete="off" aria-label="Ký tự OTP số 3">
+                        <input type="text" class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                            data-index="3" autocomplete="off" aria-label="Ký tự OTP số 4">
+                        <input type="text" class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                            data-index="4" autocomplete="off" aria-label="Ký tự OTP số 5">
+                        <input type="text" class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                            data-index="5" autocomplete="off" aria-label="Ký tự OTP số 6">
+                    </div>
+                    <div class="otp-error-hint" id="otpErrorHint"></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="authEmail">Email trường HUCE (*@huce.edu.vn)</label>
-                    <input type="email" class="form-input" id="authEmail" required placeholder="tuan.nq@huce.edu.vn"
-                        value="tuan.nq@huce.edu.vn">
-                </div>
+                <div class="otp-countdown-card">
+                    <div class="otp-timer-info">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Mã có hiệu lực trong:</span>
+                        <strong class="otp-timer-number" id="otpTimerCount">02:00</strong>
+                    </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="authPassword">Mật khẩu</label>
-                    <div class="password-input-wrapper">
-                        <input type="password" class="form-input" id="authPassword" required
-                            placeholder="Nhập mật khẩu an toàn..." autocomplete="new-password">
-                        <button type="button" class="btn-toggle-password" id="togglePasswordBtn"
-                            aria-label="Hiện/ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
-                            <svg id="eyeIcon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
+                    <div class="otp-resend-action">
+                        <span>Chưa nhận được mã?</span>
+                        <button type="button" class="btn-resend-otp" id="btnResendOtp" disabled>
+                            Gửi lại mã (<span id="resendCountdown">60</span>s)
                         </button>
                     </div>
-
-                    <!-- Password strength & checklist (chỉ hiện khi đăng ký) -->
-                    <div class="password-strength-container register-only" id="passwordStrengthBox">
-                        <div class="strength-meter-header">
-                            <span class="strength-label">Độ an toàn:</span>
-                            <span class="strength-text" id="strengthStatusText">Chưa nhập</span>
-                        </div>
-                        <div class="strength-meter-track">
-                            <div class="strength-meter-bar" id="strengthBar"></div>
-                        </div>
-
-                        <div class="password-criteria-list" id="passwordCriteria">
-                            <div class="criteria-item" id="critMinLength">
-                                <span class="criteria-icon"></span>
-                                <span class="criteria-text">Ít nhất 8 ký tự</span>
-                            </div>
-                            <div class="criteria-item" id="critUppercase">
-                                <span class="criteria-icon"></span>
-                                <span class="criteria-text">Ít nhất 1 ký tự viết hoa (A-Z)</span>
-                            </div>
-                            <div class="criteria-item" id="critLetterNumber">
-                                <span class="criteria-icon"></span>
-                                <span class="criteria-text">Đủ cả chữ cái và số</span>
-                            </div>
-                            <div class="criteria-item" id="critSpecialChar">
-                                <span class="criteria-icon"></span>
-                                <span class="criteria-text">Có ít nhất 1 ký tự đặc biệt (!@#$%...)</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" id="authSubmitBtn" style="width: 100%; margin-top: 10px;">
-                    Tạo tài khoản ngay
+                <button type="button" class="btn btn-primary" id="btnVerifyOtp" style="width: 100%; margin-top: 16px;">
+                    Xác nhận &amp; Hoàn tất đăng ký
                 </button>
-            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUCE Mail Floating Notification (Thông báo đã gửi mã xác thực về email) -->
+    <div class="huce-mail-notification" id="huceMailNotification">
+        <div class="huce-mail-header">
+            <div class="huce-mail-sender">
+                <span class="huce-mail-avatar">H</span>
+                <div>
+                    <div class="huce-mail-from">Phòng Đào tạo &amp; CNTT HUCE</div>
+                    <div class="huce-mail-time">no-reply@st.huce.edu.vn • Vừa xong</div>
+                </div>
+            </div>
+            <button type="button" class="huce-mail-close" id="huceMailClose" aria-label="Đóng">&times;</button>
+        </div>
+        <div class="huce-mail-body">
+            <div class="huce-mail-subject">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    style="display:inline-block; vertical-align:text-bottom; margin-right:4px;">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Đã gửi mã xác thực OTP về email
+            </div>
+            <div class="huce-mail-text">Hệ thống đã gửi mã xác thực gồm <strong>6 chữ số</strong> tới hòm thư sinh viên
+                của bạn:</div>
+            <div class="huce-mail-target-box">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span id="huceMailTargetEmail">tuan.nq@st.huce.edu.vn</span>
+            </div>
+            <div class="huce-mail-instruction">Vui lòng kiểm tra hộp thư đến (Inbox) hoặc thư rác (Spam) của email sinh
+                viên để lấy mã xác thực và hoàn tất đăng ký.</div>
+            <div class="huce-mail-footer">Mã OTP có hiệu lực trong 5 phút. Vui lòng không chia sẻ mã này cho bất kỳ ai.
+            </div>
         </div>
     </div>
 
