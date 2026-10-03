@@ -1332,6 +1332,338 @@ button {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
 }
 
+/* ==========================================================================
+   OTP VERIFICATION & SIMULATED MAIL NOTIFICATION
+   ========================================================================== */
+
+/* Nút quay lại bước trước */
+.btn-back-to-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  margin-left: -10px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-back-to-form:hover {
+  background: #F1F5F9;
+  color: var(--primary);
+}
+
+.otp-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.otp-badge-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 12px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 6px rgba(0, 102, 255, 0.08);
+}
+
+.otp-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.otp-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.otp-email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  margin-top: 8px;
+  word-break: break-all;
+}
+
+/* 6 ô nhập mã OTP */
+.otp-inputs-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.otp-box {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  font-family: inherit;
+  color: var(--navy);
+  background: #F8FAFC;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.otp-box:focus {
+  background: #FFFFFF;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+.otp-box.filled {
+  border-color: var(--primary);
+  background: #FFFFFF;
+}
+
+.otp-box.input-error {
+  border-color: #EF4444 !important;
+  background: #FEF2F2 !important;
+  animation: shakeInput 0.4s ease-in-out;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+}
+
+.otp-error-hint {
+  min-height: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #EF4444;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Đếm ngược và Gửi lại mã */
+.otp-countdown-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-top: 14px;
+}
+
+.otp-timer-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.otp-timer-number {
+  color: var(--primary);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.otp-resend-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.btn-resend-otp {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.btn-resend-otp:not(:disabled):hover {
+  text-decoration: underline;
+  background: rgba(0, 102, 255, 0.08);
+}
+
+.btn-resend-otp:disabled {
+  color: var(--text-light);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Card Giả lập Email HUCE nổi (Toast / Notification) */
+.huce-mail-notification {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 45px -10px rgba(0, 30, 43, 0.28), 0 0 0 1px rgba(0, 102, 255, 0.15);
+  padding: 16px;
+  z-index: 3500;
+  transform: translateY(-40px) scale(0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.huce-mail-notification.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.huce-mail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #F1F5F9;
+  margin-bottom: 10px;
+}
+
+.huce-mail-sender {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.huce-mail-avatar {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #0066FF, #003B99);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  box-shadow: 0 4px 10px rgba(0, 102, 255, 0.3);
+}
+
+.huce-mail-from {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.huce-mail-time {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.huce-mail-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.huce-mail-close:hover {
+  color: var(--text-main);
+  background: #F1F5F9;
+}
+
+.huce-mail-subject {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.huce-mail-text {
+  font-size: 12.5px;
+  color: var(--text-body);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.huce-mail-target-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 100%);
+  border: 1px solid #BFDBFE;
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  margin: 8px 0 10px 0;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.huce-mail-target-box svg {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.huce-mail-instruction {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.huce-mail-footer {
+  font-size: 11px;
+  color: var(--text-light);
+  font-style: italic;
+  border-top: 1px dashed #E2E8F0;
+  padding-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .otp-inputs-wrapper {
+    gap: 6px;
+  }
+
+  .otp-box {
+    width: 40px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .huce-mail-notification {
+    top: 12px;
+    right: 12px;
+    width: calc(100vw - 24px);
+  }
+}
+
+
 
 .toast {
   position: fixed;
