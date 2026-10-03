@@ -116,36 +116,90 @@
     const topName = document.querySelector('#desktopUserProfileBtn .user-name') || document.querySelector('.user-profile-btn .user-name');
     const topRole = document.querySelector('#desktopUserProfileBtn .user-role') || document.querySelector('.user-profile-btn .user-role');
 
-    if (topAvatar) topAvatar.textContent = user.avatar;
+    if (topAvatar) {
+      topAvatar.textContent = user.avatar;
+      if (user.rawRole === 'LECTURER') {
+        topAvatar.style.background = 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)';
+        topAvatar.style.color = '#FFFFFF';
+      } else {
+        topAvatar.style.background = '';
+        topAvatar.style.color = '';
+      }
+    }
     if (topName) topName.textContent = user.fullName;
-    if (topRole) topRole.textContent = user.role;
+    if (topRole) {
+      topRole.textContent = user.role;
+      if (user.rawRole === 'LECTURER') {
+        topRole.style.color = '#7C3AED';
+        topRole.style.fontWeight = '700';
+      } else {
+        topRole.style.color = '';
+        topRole.style.fontWeight = '';
+      }
+    }
 
     // 2. Mobile Header Avatar (#mobileHeaderMenuBtn)
     const mobileHeaderAvatar = document.querySelector('#mobileHeaderMenuBtn .user-avatar-sm') || document.querySelector('.mobile-avatar-btn .user-avatar-sm');
-    if (mobileHeaderAvatar) mobileHeaderAvatar.textContent = user.avatar;
+    if (mobileHeaderAvatar) {
+      mobileHeaderAvatar.textContent = user.avatar;
+      if (user.rawRole === 'LECTURER') {
+        mobileHeaderAvatar.style.background = 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)';
+        mobileHeaderAvatar.style.color = '#FFFFFF';
+      }
+    }
 
     // 3. Post Composer (Collapsed & Expanded)
     const collapsedUserAvatar = document.getElementById('collapsedUserAvatar');
-    if (collapsedUserAvatar) collapsedUserAvatar.textContent = user.avatar;
+    if (collapsedUserAvatar) {
+      collapsedUserAvatar.textContent = user.avatar;
+      if (user.rawRole === 'LECTURER') {
+        collapsedUserAvatar.style.background = 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)';
+        collapsedUserAvatar.style.color = '#FFFFFF';
+      }
+    }
 
     const composerAvatar = document.getElementById('composerAvatar');
-    if (composerAvatar) composerAvatar.textContent = user.avatar;
+    if (composerAvatar) {
+      composerAvatar.textContent = user.avatar;
+      if (user.rawRole === 'LECTURER') {
+        composerAvatar.style.background = 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)';
+        composerAvatar.style.color = '#FFFFFF';
+      }
+    }
 
     const composerAuthorName = document.getElementById('composerAuthorName');
     if (composerAuthorName) composerAuthorName.textContent = user.fullName;
 
     const composerAuthorSub = document.getElementById('composerAuthorSub');
-    if (composerAuthorSub) composerAuthorSub.textContent = user.role;
+    if (composerAuthorSub) {
+      composerAuthorSub.textContent = user.role;
+      if (user.rawRole === 'LECTURER') {
+        composerAuthorSub.style.color = '#7C3AED';
+        composerAuthorSub.style.fontWeight = '700';
+      }
+    }
 
     // 4. Mobile Drawer Profile
     const drawerAvatar = document.querySelector('.mobile-drawer-user .user-avatar-lg');
-    if (drawerAvatar) drawerAvatar.textContent = user.avatar;
+    if (drawerAvatar) {
+      drawerAvatar.textContent = user.avatar;
+      if (user.rawRole === 'LECTURER') {
+        drawerAvatar.style.background = 'linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)';
+        drawerAvatar.style.color = '#FFFFFF';
+      }
+    }
 
     const drawerName = document.querySelector('.mobile-drawer-user .drawer-user-name');
     if (drawerName) drawerName.textContent = user.fullName;
 
     const drawerRole = document.querySelector('.mobile-drawer-user .drawer-user-role');
-    if (drawerRole) drawerRole.textContent = user.role;
+    if (drawerRole) {
+      drawerRole.textContent = user.role;
+      if (user.rawRole === 'LECTURER') {
+        drawerRole.style.color = '#7C3AED';
+        drawerRole.style.fontWeight = '700';
+      }
+    }
 
     // 5. Comment Inputs Current User Avatars
     document.querySelectorAll('.comment-input-form .comment-author-avatar').forEach(avatarEl => {

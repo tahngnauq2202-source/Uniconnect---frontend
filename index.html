@@ -403,24 +403,42 @@
                 </h3>
 
                 <form id="authForm">
+                    <!-- Lựa chọn đối tượng: Sinh viên hoặc Giảng viên -->
+                    <div class="auth-role-tabs" id="authRoleTabs">
+                        <button type="button" class="role-tab-btn active" id="roleBtnStudent" data-role="student" title="Đăng nhập / Đăng ký dành cho Sinh viên">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                            </svg>
+                            <span>Sinh viên</span>
+                        </button>
+                        <button type="button" class="role-tab-btn" id="roleBtnLecturer" data-role="lecturer" title="Đăng nhập / Đăng ký dành cho Giảng viên">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                <circle cx="12" cy="8" r="3"></circle>
+                            </svg>
+                            <span>Giảng viên</span>
+                            <span class="role-badge-free">Email tự do</span>
+                        </button>
+                    </div>
+
+                    <input type="hidden" id="authRole" value="student">
+
                     <div class="form-group register-only">
                         <label class="form-label" for="authFullName">Họ và tên</label>
                         <input type="text" class="form-input" id="authFullName" placeholder="Nhập họ và tên..."
                             autocomplete="name">
                     </div>
 
-                    <div class="form-group register-only">
-                        <label class="form-label" for="authRole">Bạn là</label>
-                        <select class="form-input" id="authRole">
-                            <option value="student">Sinh viên HUCE</option>
-                            <option value="lecturer">Giảng viên HUCE (Cần xác thực)</option>
-                        </select>
-                    </div>
-
                     <div class="form-group">
-                        <label class="form-label" for="authEmail">Email sinh viên HUCE (*@st.huce.edu.vn)</label>
+                        <label class="form-label" for="authEmail" id="authEmailLabel">Email sinh viên HUCE (*@st.huce.edu.vn)</label>
                         <input type="email" class="form-input" id="authEmail" required
                             placeholder="Nhập email trường (@st.huce.edu.vn)..." autocomplete="username">
+                        <div class="auth-email-hint" id="authEmailHint">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <span id="authEmailHintText">Yêu cầu email do trường cấp có đuôi @st.huce.edu.vn</span>
+                        </div>
                     </div>
 
                     <div class="form-group">

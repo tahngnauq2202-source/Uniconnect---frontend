@@ -1107,6 +1107,88 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
+/* Role Switcher (Sinh viên / Giảng viên) */
+.auth-role-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: var(--radius-md, 10px);
+  margin-bottom: 18px;
+}
+
+.role-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.role-tab-btn svg {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+.role-tab-btn:hover:not(.active) {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.role-tab-btn.active {
+  background: #FFFFFF;
+  color: var(--primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.role-tab-btn.active[data-role="lecturer"] {
+  color: #7C3AED;
+}
+
+.role-tab-btn.active[data-role="lecturer"] svg {
+  stroke: #7C3AED;
+}
+
+.role-badge-free {
+  font-size: 10px;
+  background: #EDE9FE;
+  color: #6D28D9;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1;
+}
+
+.auth-email-hint {
+  font-size: 11.5px;
+  color: #64748B;
+  margin-top: 5px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.auth-email-hint svg {
+  flex-shrink: 0;
+  stroke: #64748B;
+}
+
 .form-group {
   margin-bottom: 18px;
 }

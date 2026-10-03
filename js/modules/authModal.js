@@ -28,9 +28,13 @@
     const modalTitle = document.getElementById('modalTitle');
     const registerFields = document.querySelectorAll('.register-only');
 
-    // Form Inputs
-    const authFullName = document.getElementById('authFullName');
+    // Form Inputs & Role Controls
+    const roleBtnStudent = document.getElementById('roleBtnStudent');
+    const roleBtnLecturer = document.getElementById('roleBtnLecturer');
     const authRole = document.getElementById('authRole');
+    const authFullName = document.getElementById('authFullName');
+    const authEmailLabel = document.getElementById('authEmailLabel');
+    const authEmailHintText = document.getElementById('authEmailHintText');
     const authEmail = document.getElementById('authEmail');
     const authPassword = document.getElementById('authPassword');
     const togglePasswordBtn = document.getElementById('togglePasswordBtn');
@@ -141,10 +145,51 @@
     });
 
     // ==========================================
+    // ROLE SELECTION (SINH VIÊN / GIẢNG VIÊN)
+    // ==========================================
+
+    function setRole(role = 'student') {
+      const isLecturer = role === 'lecturer';
+      if (authRole) authRole.value = isLecturer ? 'lecturer' : 'student';
+
+      if (roleBtnStudent && roleBtnLecturer) {
+        roleBtnStudent.classList.toggle('active', !isLecturer);
+        roleBtnLecturer.classList.toggle('active', isLecturer);
+      }
+
+      if (authEmailLabel) {
+        authEmailLabel.innerHTML = isLecturer
+          ? 'Email giảng viên <span style="font-weight: 600; font-size: 12px; color: #7C3AED;">(Email tự do / Gmail / HUCE)</span>'
+          : 'Email sinh viên HUCE (*@st.huce.edu.vn)';
+      }
+
+      if (authEmail) {
+        authEmail.placeholder = isLecturer
+          ? 'Ví dụ: giangvien@gmail.com hoặc gv@huce.edu.vn...'
+          : 'Nhập email trường (@st.huce.edu.vn)...';
+      }
+
+      if (authEmailHintText) {
+        authEmailHintText.textContent = isLecturer
+          ? 'Giảng viên có thể đăng nhập bằng email trường hoặc email cá nhân tự do (Gmail, Outlook...)'
+          : 'Yêu cầu email do trường cấp có đuôi @st.huce.edu.vn';
+      }
+
+      clearAuthError();
+    }
+
+    if (roleBtnStudent) {
+      roleBtnStudent.addEventListener('click', () => setRole('student'));
+    }
+    if (roleBtnLecturer) {
+      roleBtnLecturer.addEventListener('click', () => setRole('lecturer'));
+    }
+
+    // ==========================================
     // MODAL & VIEW SWITCHING
     // ==========================================
 
-    function openAuthModal(mode = 'register') {
+    function openAuthModal(mode = 'register', initialRole = 'student') {
       clearAuthError();
       authModal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -168,6 +213,7 @@
         `;
       }
       updatePasswordStrengthUI('');
+      setRole(initialRole);
 
       showAuthFormView();
       switchAuthMode(mode);
@@ -589,10 +635,12 @@
         if (data && data.token) {
           // Lưu token & user vào localStorage
           window.setAuthToken(data.token);
+          const detectedRole = (data.user && data.user.role) || pendingUserData?.role || 'STUDENT';
+          const isLecturerUser = detectedRole === 'LECTURER';
           const userObj = {
             ...(data.user || {}),
-            fullName: (data.user && data.user.fullName) || pendingUserData?.fullName || data.user?.username || 'Sinh viên HUCE',
-            role: (data.user && data.user.role) || (pendingUserData && pendingUserData.role === 'lecturer' ? 'LECTURER' : 'STUDENT')
+            fullName: (data.user && data.user.fullName) || pendingUserData?.fullName || data.user?.username || (isLecturerUser ? 'Giảng viên HUCE' : 'Sinh viên HUCE'),
+            role: detectedRole
           };
           window.setCurrentUser(userObj);
 
@@ -603,9 +651,10 @@
           clearOtpTimers();
           hideMailNotification();
 
-          const userName = data.user?.fullName || pendingUserData?.fullName || 'Sinh viên HUCE';
+          const rolePrefix = isLecturerUser ? 'Thầy/Cô' : '';
+          const userName = data.user?.fullName || pendingUserData?.fullName || (isLecturerUser ? 'Giảng viên' : 'Sinh viên');
           if (window.showToast) {
-            window.showToast(`🎉 Chúc mừng ${userName}! Đăng ký tài khoản UniConnect HUCE thành công.`, 'success');
+            window.showToast(`🎉 Chúc mừng ${rolePrefix} ${userName}! Đăng ký tài khoản UniConnect HUCE thành công.`, 'success');
           }
 
           // Chuyển hướng sang Trang chủ
@@ -695,10 +744,27 @@
           return;
         }
 
-        // 2. Kiểm tra định dạng email HUCE
+        // 2. Kiểm tra định dạng email
+        const isLecturerRole = (authRole && authRole.value === 'lecturer') || (roleBtnLecturer && roleBtnLecturer.classList.contains('active'));
+        const isValidEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if (!isValidEmailPattern) {
+          showAuthError('Vui lòng nhập định dạng email hợp lệ (ví dụ: name@domain.com)');
+          if (authEmail) {
+            authEmail.classList.add('input-error');
+            authEmail.focus();
+          }
+          return;
+        }
+
         const isSchoolEmail = email.toLowerCase().endsWith('@st.huce.edu.vn') || email.toLowerCase().endsWith('@huce.edu.vn');
-        if (!isSchoolEmail) {
-          showAuthError('Email phải có đuôi trường HUCE: *@st.huce.edu.vn hoặc *@huce.edu.vn');
+
+        // Nếu là Sinh viên: bắt buộc email trường
+        if (!isLecturerRole && !isSchoolEmail) {
+          const hint = isLogin
+            ? 'Email sinh viên phải có đuôi trường HUCE (*@st.huce.edu.vn hoặc *@huce.edu.vn). Nếu bạn là Giảng viên, vui lòng bấm chọn vai trò "Giảng viên" ở trên để đăng nhập bằng email tự do.'
+            : 'Đăng ký tài khoản sinh viên bắt buộc sử dụng email trường (*@st.huce.edu.vn hoặc *@huce.edu.vn). Nếu bạn là Giảng viên, vui lòng bấm chọn vai trò "Giảng viên".';
+          showAuthError(hint);
           if (authEmail) {
             authEmail.classList.add('input-error');
             authEmail.focus();
@@ -723,9 +789,12 @@
             if (response && response.token) {
               window.setAuthToken(response.token);
               if (response.user) {
+                const finalRole = response.user.role || (isLecturerRole ? 'LECTURER' : 'STUDENT');
+                const isLecturerUser = finalRole === 'LECTURER' || isLecturerRole;
                 const userObj = {
                   ...response.user,
-                  fullName: response.user.fullName || response.user.username || 'Sinh viên HUCE'
+                  role: finalRole,
+                  fullName: response.user.fullName || response.user.username || (isLecturerUser ? 'Giảng viên HUCE' : 'Sinh viên HUCE')
                 };
                 window.setCurrentUser(userObj);
               }
@@ -734,8 +803,10 @@
               authSubmitBtn.innerHTML = '✓ Đăng nhập thành công!';
               authSubmitBtn.disabled = true;
 
+              const roleTitle = (response.user?.role === 'LECTURER' || isLecturerRole) ? 'Thầy/Cô' : 'bạn';
+              const displayName = response.user?.fullName || (isLecturerRole ? 'Giảng viên' : 'Sinh viên');
               if (window.showToast) {
-                window.showToast(`🎉 Đăng nhập thành công! Chào mừng ${response.user?.fullName || 'bạn'}.`, 'success');
+                window.showToast(`🎉 Đăng nhập thành công! Chào mừng ${roleTitle} ${displayName}.`, 'success');
               }
 
               // Chuyển hướng sang Trang chủ
@@ -817,13 +888,14 @@
             username,
             email,
             password,
-            fullName
+            fullName,
+            role: isLecturerRole ? 'LECTURER' : 'STUDENT'
           });
 
           setButtonLoading(authSubmitBtn, false);
 
           // Đăng ký bước đầu thành công (201 / 200) -> Chuyển sang bước OTP
-          pendingUserData = { fullName, email, role, password };
+          pendingUserData = { fullName, email, role: isLecturerRole ? 'LECTURER' : 'STUDENT', password };
 
           showMailNotification(email);
           startOtpCountdown(120);
