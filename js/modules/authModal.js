@@ -45,7 +45,7 @@
     // OTP Elements
     const otpDisplayEmail = document.getElementById('otpDisplayEmail');
     const otpInputsWrapper = document.getElementById('otpInputsWrapper');
-    const otpBoxes = otpInputsWrapper ? otpInputsWrapper.querySelectorAll('.otp-box') : [];
+    const otpBoxes = otpInputsWrapper ? Array.from(otpInputsWrapper.querySelectorAll('.otp-box')) : [];
     const otpErrorHint = document.getElementById('otpErrorHint');
     const otpTimerCount = document.getElementById('otpTimerCount');
     const btnResendOtp = document.getElementById('btnResendOtp');
@@ -58,7 +58,6 @@
     const huceMailTargetEmail = document.getElementById('huceMailTargetEmail');
 
     // Module State
-    let currentOtp = '';
     let pendingUserData = null;
     let otpTimerInterval = null;
     let resendTimerInterval = null;
@@ -79,7 +78,6 @@
           authErrorAlert.textContent = message;
         }
         authErrorAlert.style.display = 'flex';
-        // Hiệu ứng rung nhẹ báo lỗi
         authErrorAlert.style.animation = 'none';
         void authErrorAlert.offsetWidth;
         authErrorAlert.style.animation = 'shakeInput 0.35s ease-in-out';
@@ -208,7 +206,10 @@
       }
 
       setTimeout(() => {
-        if (otpBoxes[0]) otpBoxes[0].focus();
+        if (otpBoxes[0]) {
+          otpBoxes[0].focus();
+          otpBoxes[0].select();
+        }
       }, 150);
     }
 
@@ -280,8 +281,8 @@
     function showMailNotification(email) {
       if (!huceMailNotification) return;
       if (huceMailTargetEmail) huceMailTargetEmail.textContent = email;
-      huceMailNotification.classList.add('show');
 
+      huceMailNotification.classList.add('show');
       if (mailNotificationTimeout) clearTimeout(mailNotificationTimeout);
       mailNotificationTimeout = setTimeout(hideMailNotification, 12000);
     }
@@ -378,22 +379,21 @@
             fullName: pendingUserData.fullName || username
           });
 
-          if (data && data.otpCode) {
-            currentOtp = data.otpCode;
-          }
-
           otpBoxes.forEach(box => {
             box.value = '';
             box.classList.remove('filled', 'input-error');
           });
 
-          if (otpBoxes[0]) otpBoxes[0].focus();
+          if (otpBoxes[0]) {
+            otpBoxes[0].focus();
+            otpBoxes[0].select();
+          }
           showMailNotification(pendingUserData.email);
           startOtpCountdown(120);
           startResendCountdown(60);
 
           if (window.showToast) {
-            window.showToast('Đã gửi lại mã OTP mới gồm 6 chữ số tới email của bạn!', 'info');
+            window.showToast('Đã gửi lại mã OTP vào email của bạn. Vui lòng kiểm tra hộp thư!', 'info');
           }
         } catch (resendErr) {
           console.error('[UniConnect Auth] Resend OTP error:', resendErr);
@@ -423,19 +423,28 @@
     // ==========================================
 
     otpBoxes.forEach((input, index) => {
+      // Khi ô nhận focus, bôi đen ký tự để gõ đè ngay
+      input.addEventListener('focus', () => {
+        input.select();
+      });
+
       input.addEventListener('input', (e) => {
         const val = e.target.value.replace(/[^0-9]/g, '');
-        e.target.value = val;
+        // Lấy ký tự số cuối cùng được gõ
+        const digit = val ? val[val.length - 1] : '';
+        e.target.value = digit;
         if (otpErrorHint) otpErrorHint.textContent = '';
 
-        if (val) {
+        if (digit) {
           input.classList.add('filled');
           input.classList.remove('input-error');
+          // Tự động chuyển tiêu điểm sang ô tiếp theo
           if (index < otpBoxes.length - 1) {
             otpBoxes[index + 1].focus();
+            otpBoxes[index + 1].select();
           } else {
-            const allFilled = Array.from(otpBoxes).every(b => b.value.length === 1);
-            if (allFilled) setTimeout(handleVerifyOtp, 250);
+            const allFilled = otpBoxes.every(b => b.value.length === 1);
+            if (allFilled) setTimeout(handleVerifyOtp, 200);
           }
         } else {
           input.classList.remove('filled');
@@ -455,9 +464,11 @@
         } else if (e.key === 'ArrowLeft' && index > 0) {
           e.preventDefault();
           otpBoxes[index - 1].focus();
+          otpBoxes[index - 1].select();
         } else if (e.key === 'ArrowRight' && index < otpBoxes.length - 1) {
           e.preventDefault();
           otpBoxes[index + 1].focus();
+          otpBoxes[index + 1].select();
         }
       });
 
@@ -480,8 +491,11 @@
             }
           }
           const nextIndex = Math.min(digits.length, 5);
-          if (otpBoxes[nextIndex]) otpBoxes[nextIndex].focus();
-          if (digits.length === 6) setTimeout(handleVerifyOtp, 250);
+          if (otpBoxes[nextIndex]) {
+            otpBoxes[nextIndex].focus();
+            otpBoxes[nextIndex].select();
+          }
+          if (digits.length === 6) setTimeout(handleVerifyOtp, 200);
         }
       });
     });
@@ -491,14 +505,14 @@
     // ==========================================
 
     async function handleVerifyOtp() {
-      const enteredOtp = Array.from(otpBoxes).map(b => b.value).join('');
+      const enteredOtp = otpBoxes.map(b => b.value).join('');
 
       if (enteredOtp.length < 6) {
         if (otpErrorHint) {
           otpErrorHint.textContent = 'Vui lòng nhập đủ 6 chữ số mã OTP.';
           otpErrorHint.style.color = '#EF4444';
         }
-        const firstEmpty = Array.from(otpBoxes).find(b => !b.value);
+        const firstEmpty = otpBoxes.find(b => !b.value);
         if (firstEmpty) firstEmpty.focus();
         return;
       }
@@ -520,9 +534,12 @@
         if (data && data.token) {
           // Lưu token & user vào localStorage
           window.setAuthToken(data.token);
-          if (data.user) {
-            window.setCurrentUser(data.user);
-          }
+          const userObj = {
+            ...(data.user || {}),
+            fullName: (data.user && data.user.fullName) || pendingUserData?.fullName || data.user?.username || 'Sinh viên HUCE',
+            role: (data.user && data.user.role) || (pendingUserData && pendingUserData.role === 'lecturer' ? 'LECTURER' : 'STUDENT')
+          };
+          window.setCurrentUser(userObj);
 
           btnVerifyOtp.classList.remove('is-loading');
           btnVerifyOtp.disabled = true;
@@ -577,7 +594,10 @@
             b.value = '';
             b.classList.remove('filled', 'input-error');
           });
-          if (otpBoxes[0]) otpBoxes[0].focus();
+          if (otpBoxes[0]) {
+            otpBoxes[0].focus();
+            otpBoxes[0].select();
+          }
         }, 800);
       }
     }
@@ -646,10 +666,13 @@
 
             // Đăng nhập thành công (Status 200)
             if (response && response.token) {
-              // Lưu session vào localStorage
               window.setAuthToken(response.token);
               if (response.user) {
-                window.setCurrentUser(response.user);
+                const userObj = {
+                  ...response.user,
+                  fullName: response.user.fullName || response.user.username || 'Sinh viên HUCE'
+                };
+                window.setCurrentUser(userObj);
               }
 
               authSubmitBtn.classList.remove('is-loading');
@@ -746,16 +769,13 @@
 
           // Đăng ký bước đầu thành công (201 / 200) -> Chuyển sang bước OTP
           pendingUserData = { fullName, email, role, password };
-          if (response && response.otpCode) {
-            currentOtp = response.otpCode;
-          }
 
           showMailNotification(email);
           startOtpCountdown(120);
           startResendCountdown(60);
 
           if (window.showToast) {
-            window.showToast('Đăng ký bước đầu thành công! Mã OTP đã được gửi về email trường của bạn.', 'success');
+            window.showToast('Đã gửi mã xác thực OTP vào email của bạn. Vui lòng kiểm tra hòm thư!', 'success');
           }
 
           // Chuyển sang giao diện nhập mã OTP

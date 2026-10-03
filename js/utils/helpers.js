@@ -66,7 +66,7 @@
           const isLecturer = u.role === 'LECTURER' || u.role === 'lecturer';
           const isAdmin = u.role === 'ADMIN' || u.role === 'admin';
 
-          let roleDisplay = 'Sinh viên K21 • Khoa Xây dựng HUCE';
+          let roleDisplay = 'Sinh viên K21 • HUCE';
           let colorClass = 'author-blue';
 
           if (isAdmin) {
@@ -75,11 +75,14 @@
           } else if (isLecturer) {
             roleDisplay = 'Giảng viên HUCE';
             colorClass = 'author-purple';
+          } else if (u.role && typeof u.role === 'string' && (u.role.includes('•') || u.role.includes('HUCE'))) {
+            roleDisplay = u.role;
           }
 
           return {
             id: u.id || 'current-user-id',
             fullName: name,
+            username: u.username || '',
             email: u.email || 'sinhvien@st.huce.edu.vn',
             role: roleDisplay,
             rawRole: u.role || 'STUDENT',
@@ -94,6 +97,7 @@
     return {
       id: 'default-user',
       fullName: 'Linh Nguyễn',
+      username: 'linh.nt',
       email: 'linh.nt@st.huce.edu.vn',
       role: 'Sinh viên K21 • Khoa Xây dựng HUCE',
       rawRole: 'STUDENT',
@@ -103,9 +107,60 @@
     };
   }
 
+  function syncAllUserUI() {
+    const user = getCurrentUser();
+    if (!user) return;
+
+    // 1. Desktop Topbar Profile (#desktopUserProfileBtn)
+    const topAvatar = document.querySelector('#desktopUserProfileBtn .user-avatar') || document.querySelector('.user-profile-btn .user-avatar');
+    const topName = document.querySelector('#desktopUserProfileBtn .user-name') || document.querySelector('.user-profile-btn .user-name');
+    const topRole = document.querySelector('#desktopUserProfileBtn .user-role') || document.querySelector('.user-profile-btn .user-role');
+
+    if (topAvatar) topAvatar.textContent = user.avatar;
+    if (topName) topName.textContent = user.fullName;
+    if (topRole) topRole.textContent = user.role;
+
+    // 2. Mobile Header Avatar (#mobileHeaderMenuBtn)
+    const mobileHeaderAvatar = document.querySelector('#mobileHeaderMenuBtn .user-avatar-sm') || document.querySelector('.mobile-avatar-btn .user-avatar-sm');
+    if (mobileHeaderAvatar) mobileHeaderAvatar.textContent = user.avatar;
+
+    // 3. Post Composer (Collapsed & Expanded)
+    const collapsedUserAvatar = document.getElementById('collapsedUserAvatar');
+    if (collapsedUserAvatar) collapsedUserAvatar.textContent = user.avatar;
+
+    const composerAvatar = document.getElementById('composerAvatar');
+    if (composerAvatar) composerAvatar.textContent = user.avatar;
+
+    const composerAuthorName = document.getElementById('composerAuthorName');
+    if (composerAuthorName) composerAuthorName.textContent = user.fullName;
+
+    const composerAuthorSub = document.getElementById('composerAuthorSub');
+    if (composerAuthorSub) composerAuthorSub.textContent = user.role;
+
+    // 4. Mobile Drawer Profile
+    const drawerAvatar = document.querySelector('.mobile-drawer-user .user-avatar-lg');
+    if (drawerAvatar) drawerAvatar.textContent = user.avatar;
+
+    const drawerName = document.querySelector('.mobile-drawer-user .drawer-user-name');
+    if (drawerName) drawerName.textContent = user.fullName;
+
+    const drawerRole = document.querySelector('.mobile-drawer-user .drawer-user-role');
+    if (drawerRole) drawerRole.textContent = user.role;
+
+    // 5. Comment Inputs Current User Avatars
+    document.querySelectorAll('.comment-input-form .comment-author-avatar').forEach(avatarEl => {
+      avatarEl.textContent = user.avatar;
+    });
+  }
+
   function setCurrentUser(user) {
     try {
-      localStorage.setItem('uniconnect_user', JSON.stringify(user));
+      if (user) {
+        localStorage.setItem('uniconnect_user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('uniconnect_user');
+      }
+      syncAllUserUI();
     } catch (_) {}
   }
 
@@ -124,6 +179,7 @@
   function clearAuth() {
     localStorage.removeItem('uniconnect_token');
     localStorage.removeItem('uniconnect_user');
+    syncAllUserUI();
   }
 
   // Web Audio chime for real-time notification
@@ -157,11 +213,18 @@
     }
   }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncAllUserUI);
+  } else {
+    syncAllUserUI();
+  }
+
   window.escapeHtml = escapeHtml;
   window.formatTimeAgo = formatTimeAgo;
   window.copyToClipboard = copyToClipboard;
   window.getCurrentUser = getCurrentUser;
   window.setCurrentUser = setCurrentUser;
+  window.syncAllUserUI = syncAllUserUI;
   window.getAuthToken = getAuthToken;
   window.setAuthToken = setAuthToken;
   window.clearAuth = clearAuth;

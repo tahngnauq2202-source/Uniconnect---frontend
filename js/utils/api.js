@@ -9,8 +9,15 @@
 
   // Base API configuration
   const API_CONFIG = {
-    BASE_URL: '', // Relative URL so it works seamlessly on localhost:5000 or production domain
-    TIMEOUT_MS: 15000,
+    get BASE_URL() {
+      if (window.APP_CONFIG && typeof window.APP_CONFIG.BACKEND_URL === 'string') {
+        return window.APP_CONFIG.BACKEND_URL.replace(/\/+$/, '');
+      }
+      return '';
+    },
+    get TIMEOUT_MS() {
+      return (window.APP_CONFIG && window.APP_CONFIG.TIMEOUT_MS) || 20000;
+    },
   };
 
   /**
@@ -84,10 +91,10 @@
     /**
      * Đăng ký tài khoản sinh viên / giảng viên HUCE
      */
-    async register({ username, email, password }) {
+    async register({ username, email, password, fullName }) {
       return request('/api/auth/register', {
         method: 'POST',
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ username, email, password, fullName }),
       });
     },
 
@@ -389,6 +396,20 @@
     },
   };
 
+  /**
+   * Chuyển đổi đường dẫn ảnh/tệp tin sang URL hoàn chỉnh tương ứng với Backend URL
+   */
+  function getMediaUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('blob:')) {
+      return path;
+    }
+    const base = (window.APP_CONFIG && window.APP_CONFIG.STATIC_URL) 
+      ? window.APP_CONFIG.STATIC_URL.replace(/\/+$/, '') 
+      : API_CONFIG.BASE_URL;
+    return `${base}${path.startsWith('/') ? '' : '/'}${path}`;
+  }
+
   // Export to global window object
   window.API = {
     auth,
@@ -400,5 +421,6 @@
     upload,
     categories,
     request,
+    getMediaUrl,
   };
 })();

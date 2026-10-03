@@ -8,32 +8,27 @@
   document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🎓 UniConnect HUCE - Khởi động Bảng tin Học thuật (Feed)', 'color: #0066FF; font-weight: bold; font-size: 14px;');
 
+    // Sync all user UI elements across the page (topbar, drawer, composer, comments)
+    if (window.syncAllUserUI) {
+      window.syncAllUserUI();
+    }
+
     const user = window.getCurrentUser ? window.getCurrentUser() : null;
 
-    // Sync Desktop Topbar User Profile
-    if (user) {
-      const topAvatar = document.querySelector('.user-profile-btn .user-avatar-sm') || document.querySelector('.user-avatar-sm');
-      const topName = document.querySelector('.user-profile-btn .user-name-text') || document.querySelector('.user-name-text');
-      const topRole = document.querySelector('.user-profile-btn .user-role-badge') || document.querySelector('.user-role-badge');
-
-      if (topAvatar) topAvatar.textContent = user.avatar;
-      if (topName) topName.textContent = user.fullName;
-      if (topRole) topRole.textContent = user.rawRole === 'LECTURER' ? 'Giảng viên' : (user.rawRole === 'ADMIN' ? 'Quản trị viên' : 'Sinh viên');
-
-      // Add clickable logout to user profile
-      const userProfileBtn = document.querySelector('.user-profile-btn');
-      if (userProfileBtn) {
-        userProfileBtn.title = 'Nhấp để Đăng xuất';
-        userProfileBtn.addEventListener('click', () => {
-          if (confirm(`Bạn có muốn đăng xuất tài khoản "${user.fullName}" không?`)) {
-            if (window.clearAuth) window.clearAuth();
-            if (window.showToast) window.showToast('Đã đăng xuất thành công', 'info');
-            setTimeout(() => {
-              window.location.href = 'index.html';
-            }, 500);
-          }
-        });
-      }
+    // Add clickable logout to user profile
+    const userProfileBtn = document.getElementById('desktopUserProfileBtn') || document.querySelector('.user-profile-btn');
+    if (userProfileBtn) {
+      userProfileBtn.title = 'Nhấp để Đăng xuất';
+      userProfileBtn.addEventListener('click', () => {
+        const displayName = (window.getCurrentUser && window.getCurrentUser().fullName) || (user && user.fullName) || 'tài khoản';
+        if (confirm(`Bạn có muốn đăng xuất tài khoản "${displayName}" không?`)) {
+          if (window.clearAuth) window.clearAuth();
+          if (window.showToast) window.showToast('Đã đăng xuất thành công', 'info');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 500);
+        }
+      });
     }
 
     // Desktop Sidebar Logout
